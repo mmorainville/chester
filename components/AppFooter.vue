@@ -17,11 +17,11 @@
         .column
           .buttons
             a.button(href="#")
-              img(src="placeholder/icons/twitter.svg", alt="")
+              b-icon(icon="twitter")
             a.button(href="#")
-              img(src="placeholder/icons/facebook-f.svg", alt="")
+              b-icon(icon="facebook")
             a.button(href="#")
-              img(src="placeholder/icons/instagram.svg", alt="")
+              b-icon(icon="instagram")
 
         .column.has-text-centered.has-text-right-tablet
           p.subtitle.is-6 &copy; 2019 Pied Piper. All right reserved.

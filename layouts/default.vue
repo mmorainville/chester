@@ -1,7 +1,7 @@
 <template lang="pug">
   .app-content.tw-min-h-screen.tw-bg-gray-100
 
-    app-navbar
+    app-navbar.tw-bg-transparent
 
     section.section
       .container
