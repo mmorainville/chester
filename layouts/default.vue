@@ -46,6 +46,7 @@
 <script>
   import AppFooter from '../components/AppFooter'
   import AppNavbar from '../components/AppNavbar'
+
   export default {
     components: {AppNavbar, AppFooter},
     data () {
