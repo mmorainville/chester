@@ -23,6 +23,8 @@ export default {
   ** Global CSS
   */
   css: [
+    '@/assets/css/app-style.scss',
+    '@/assets/css/buefy.scss'
   ],
   /*
   ** Plugins to load before mounting the App
