@@ -23,8 +23,7 @@ export default {
   ** Global CSS
   */
   css: [
-    '@/assets/css/app-style.scss',
-    '@/assets/css/buefy.scss'
+    '@/assets/css/app-style.scss'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -40,13 +39,15 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    '@nuxtjs/tailwindcss',
     // Doc: https://buefy.github.io/#/documentation
     'nuxt-buefy',
+    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
+    '@nuxtjs/tailwindcss',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    // Doc: https://github.com/Developmint/nuxt-purgecss
+    'nuxt-purgecss'
   ],
   /*
   ** Axios module configuration
@@ -62,6 +63,7 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    }
+    },
+    extractCSS: true
   }
 }

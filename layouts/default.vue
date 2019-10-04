@@ -5,7 +5,7 @@
 
     section.section
       .container
-        h2.title.has-text-centered The Pied Piper Blog
+        h2.title.has-text-centered.tw-uppercase The Pied Piper Blog
 
         .columns
           .column
