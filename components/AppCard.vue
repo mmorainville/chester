@@ -1,5 +1,5 @@
 <template lang="pug">
-  .card(style="height: 100%")
+  <div class="card tw-rounded tw-border-none tw-shadow-lg hover:tw-shadow-2xl" style="height: 100%">
     .card-image
       a(href="#")
         img(:src="image", alt="")
@@ -8,6 +8,7 @@
       h5.title.is-5
         a(href="#") {{ title }}
       a.button.is-primary(href="#") Read more
+  </div>
 </template>
 
 <script>
@@ -31,5 +32,7 @@
 </script>
 
 <style scoped>
-
+  .card {
+    transition: box-shadow 0.5s;
+  }
 </style>

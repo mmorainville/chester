@@ -9,36 +9,24 @@
 
         .columns
           .column
-            .card(style="height: 100%")
-              .card-image
-                a(href="#")
-                  img(src="https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2", alt="")
-              .card-content
-                span.is-size-7 25 Jun 2019
-                h5.title.is-5
-                  a(href="#") Why I'm the Best Programmer Ever
-                a.button.is-primary(href="#") Read more
+            app-card(
+              image="https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2",
+              date="25 Jun 2019",
+              title="Why I'm the Best Programmer Ever"
+            )
           .column
-            .card(style="height: 100%")
-              .card-image
-                a(href="#")
-                  img(src="https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2", alt="")
-              .card-content
-                span.is-size-7 25 Jun 2019
-                h5.title.is-5
-                  a(href="#") Secrets of Decentralization
-                a.button.is-primary(href="#") Read more
+            app-card(
+              image="https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2",
+              date="25 Jun 2019",
+              title="Secrets of Decentralization"
+            )
 
           .column
-            .card(style="height: 100%")
-              .card-image
-                a(href="#")
-                  img(src="https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2", alt="")
-              .card-content
-                span.is-size-7 25 Jun 2019
-                h5.title.is-5
-                  a(href="#") Why Strong Tea Isn't Good
-                a.button.is-primary(href="#") Read more
+            app-card(
+              image="https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2",
+              date="25 Jun 2019",
+              title="Why Strong Tea Isn't Good"
+            )
 
         nuxt
 
