@@ -40,53 +40,17 @@
                   a(href="#") Why Strong Tea Isn't Good
                 a.button.is-primary(href="#") Read more
 
-        .columns
-          .column
-            app-card(
-              image="https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2",
-              date="25 Jun 2019",
-              title="Secrets of Decentralization"
-            )
-
-          .column
-            app-card(
-              image="https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2",
-              date="25 Jun 2019",
-              title="Secrets of Decentralization"
-            )
-
-          .column
-            app-card(
-              image="https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2",
-              date="25 Jun 2019",
-              title="Secrets of Decentralization"
-            )
+        nuxt
 
     app-footer
 </template>
 
 <script>
-  import AppFooter from '../components/AppFooter'
-  import AppNavbar from '../components/AppNavbar'
-  import AppCard from '../components/AppCard'
+  import AppFooter from '~/components/AppFooter'
+  import AppNavbar from '~/components/AppNavbar'
+  import AppCard from '~/components/AppCard'
 
   export default {
-    components: {AppCard, AppNavbar, AppFooter},
-    data () {
-      return {
-        items: [
-          {
-            title: 'Home',
-            icon: 'home',
-            to: {name: 'index'}
-          },
-          {
-            title: 'Inspire',
-            icon: 'lightbulb',
-            to: {name: 'inspire'}
-          }
-        ]
-      }
-    }
+    components: {AppCard, AppNavbar, AppFooter}
   }
 </script>

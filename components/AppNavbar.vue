@@ -9,9 +9,7 @@
           span(aria-hidden="true")
       .navbar-menu
         .navbar-start
-          a.navbar-item(href="#") Features
-          a.navbar-item(href="#") Enterprise
-          a.navbar-item(href="#") Support
+          nuxt-link.navbar-item(v-for="(item, key) of items", :key="key", :to="item.to") {{ item.title }}
           .navbar-item.has-dropdown.is-hoverable
             a.navbar-link ICO
             .navbar-dropdown
@@ -26,7 +24,23 @@
 
 <script>
   export default {
-    name: 'AppNavbar'
+    name: 'AppNavbar',
+    data () {
+      return {
+        items: [
+          {
+            title: 'Home',
+            icon: 'home',
+            to: {name: 'index'}
+          },
+          {
+            title: 'Inspire',
+            icon: 'lightbulb',
+            to: {name: 'inspire'}
+          }
+        ]
+      }
+    }
   }
 </script>
 
