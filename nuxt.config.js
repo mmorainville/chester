@@ -47,13 +47,31 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     // Doc: https://github.com/Developmint/nuxt-purgecss
-    'nuxt-purgecss'
+    'nuxt-purgecss',
+    // Doc: https://auth.nuxtjs.org/
+    '@nuxtjs/auth'
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+  router: {
+    middleware: ['auth']
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'https://fathomless-fjord-40899.herokuapp.com/auth/local', method: 'post', propertyName: 'jwt' },
+          logout: { url: '/api/auth/logout', method: 'post' },
+          user: { url: 'https://fathomless-fjord-40899.herokuapp.com/users/me', method: 'get' }
+        },
+        // tokenRequired: true,
+        // tokenType: 'bearer'
+      }
+    }
   },
   /*
   ** Build configuration

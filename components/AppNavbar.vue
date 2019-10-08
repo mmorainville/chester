@@ -2,7 +2,7 @@
   nav.navbar
     .container
       .navbar-brand
-        a.navbar-item(href="#") Pied Piper
+        nuxt-link.navbar-item(:to="{name: 'index'}") Chester
         a.navbar-burger(role="button", aria-label="menu", aria-expanded="false")
           span(aria-hidden="true")
           span(aria-hidden="true")
@@ -18,7 +18,7 @@
         .navbar-end
           .navbar-item
             .buttons
-              a.button.is-light(href="#") Log in
+              nuxt-link.button.is-light(:to="{name: 'login'}") Log in
               a.button.is-primary(href="#") Sign up
 </template>
 
@@ -37,6 +37,10 @@
             title: 'Inspire',
             icon: 'lightbulb',
             to: {name: 'inspire'}
+          },
+          {
+            title: 'Liens',
+            to: {name: 'links'}
           }
         ]
       }
