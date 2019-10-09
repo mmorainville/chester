@@ -25,8 +25,8 @@
 
     data () {
       return {
-        title: '',
-        url: ''
+        title: this.$route.query.title ? this.$route.query.title : '',
+        url: this.$route.query.url ? this.$route.query.url : ''
       }
     },
 
