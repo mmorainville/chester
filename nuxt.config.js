@@ -58,7 +58,7 @@ export default {
   axios: {
   },
   router: {
-    middleware: ['auth']
+    // middleware: ['auth']
   },
   auth: {
     strategies: {
@@ -66,7 +66,7 @@ export default {
         endpoints: {
           login: { url: 'https://fathomless-fjord-40899.herokuapp.com/auth/local', method: 'post', propertyName: 'jwt' },
           logout: { url: '/api/auth/logout', method: 'post' },
-          user: { url: 'https://fathomless-fjord-40899.herokuapp.com/users/me', method: 'get' }
+          user: { url: 'https://fathomless-fjord-40899.herokuapp.com/users/me', method: 'get', propertyName: false }
         },
         // tokenRequired: true,
         // tokenType: 'bearer'

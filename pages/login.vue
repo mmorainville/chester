@@ -36,6 +36,7 @@
             password: this.password
           }
         })
+          .then(() => this.$buefy.toast.open('Logged In!'))
       }
     }
   }

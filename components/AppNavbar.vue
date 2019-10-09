@@ -11,15 +11,15 @@
         .navbar-start
           nuxt-link.navbar-item(v-for="(item, key) of items", :key="key", :to="item.to") {{ item.title }}
           .navbar-item.has-dropdown.is-hoverable
-            a.navbar-link ICO
+            a.navbar-link Créer un nouveau...
             .navbar-dropdown
-              a.navbar-item.navbar-item-dropdown(href="#") Whitepaper
-              a.navbar-item.navbar-item-dropdown(href="#") Token
+              nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'links-create'}") Lien
         .navbar-end
           .navbar-item
             .buttons
-              nuxt-link.button.is-light(:to="{name: 'login'}") Log in
-              a.button.is-primary(href="#") Sign up
+              nuxt-link.button.is-light(:to="{name: 'login'}" v-if="!$auth.loggedIn") Log in
+              a.button.is-primary(href="#" v-if="!$auth.loggedIn") Sign up
+              button.button.is-primary(type="button" v-if="$auth.loggedIn" @click="$auth.logout()") Log out
 </template>
 
 <script>
