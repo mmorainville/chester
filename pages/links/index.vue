@@ -8,7 +8,8 @@
           app-card(
             image="https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2",
             :date="link.created_at",
-            :title="link.Titre"
+            :title="link.title",
+            :url="link.url"
           )
 </template>
 

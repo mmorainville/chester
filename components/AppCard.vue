@@ -1,13 +1,13 @@
 <template lang="pug">
   <div class="card tw-rounded tw-border-none tw-shadow-lg hover:tw-shadow-2xl" style="height: 100%">
     .card-image
-      a(href="#")
+      a(:href="url")
         img(:src="image", alt="")
     .card-content
       span.is-size-7 {{ date }}
       h5.title.is-5
-        a(href="#") {{ title }}
-      a.button.is-primary(href="#") Read more
+        a(:href="url") {{ title }}
+      a.button.is-primary(:href="url") Ouvrir le lien
   </div>
 </template>
 
@@ -24,6 +24,10 @@
         required: true
       },
       title: {
+        type: String,
+        required: true
+      },
+      url: {
         type: String,
         required: true
       }
