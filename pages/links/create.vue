@@ -36,7 +36,7 @@
         const url = this.url;
 
         try {
-          const res = await this.$axios.$post('https://fathomless-fjord-40899.herokuapp.com/links', {
+          const res = await this.$axios.$post('http://localhost:1337/links', {
             Titre: title,
             url
           })

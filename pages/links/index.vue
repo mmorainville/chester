@@ -30,7 +30,7 @@ export default {
 
   async asyncData({ $axios, error }) {
     try {
-      const links = await $axios.$get('https://fathomless-fjord-40899.herokuapp.com/links')
+      const links = await $axios.$get('http://localhost:1337/links')
       return { links }
     } catch (e) {
       console.log(e)

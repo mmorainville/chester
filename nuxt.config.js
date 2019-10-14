@@ -64,9 +64,9 @@ export default {
     strategies: {
       local: {
         endpoints: {
-          login: { url: 'https://fathomless-fjord-40899.herokuapp.com/auth/local', method: 'post', propertyName: 'jwt' },
-          logout: { url: '/api/auth/logout', method: 'post' },
-          user: { url: 'https://fathomless-fjord-40899.herokuapp.com/users/me', method: 'get', propertyName: false }
+          login: { url: 'http://localhost:1337/auth/local', method: 'post', propertyName: 'jwt' },
+          logout: false,
+          user: { url: 'http://localhost:1337/users/me', method: 'get', propertyName: false }
         },
         // tokenRequired: true,
         // tokenType: 'bearer'
