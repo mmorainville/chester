@@ -1,10 +1,10 @@
-# chester
+# Chester
 
 > An app to keep track of a lot of things: links, watched movies, read books, attented events, etc.
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 $ npm run install
 

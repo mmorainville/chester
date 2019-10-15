@@ -31,7 +31,7 @@ export default {
 
   async asyncData({ $axios, error }) {
     try {
-      const links = await $axios.$get('http://localhost:1337/links')
+      const links = await $axios.$get('links')
       return { links }
     } catch (e) {
       console.log(e)

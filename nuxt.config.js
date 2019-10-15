@@ -56,6 +56,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    baseURL: process.env.BASE_URL || 'http://localhost:1337/'
   },
   router: {
     // middleware: ['auth']
@@ -64,9 +65,9 @@ export default {
     strategies: {
       local: {
         endpoints: {
-          login: { url: 'http://localhost:1337/auth/local', method: 'post', propertyName: 'jwt' },
+          login: { url: `${process.env.BASE_URL || 'http://localhost:1337/'}auth/local`, method: 'post', propertyName: 'jwt' },
           logout: false,
-          user: { url: 'http://localhost:1337/users/me', method: 'get', propertyName: false }
+          user: { url: `${process.env.BASE_URL || 'http://localhost:1337/'}users/me`, method: 'get', propertyName: false }
         },
         // tokenRequired: true,
         // tokenType: 'bearer'

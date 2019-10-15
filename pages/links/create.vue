@@ -36,8 +36,8 @@
         const url = this.url;
 
         try {
-          const res = await this.$axios.$post('http://localhost:1337/links', {
-            Titre: title,
+          const res = await this.$axios.$post('links', {
+            title,
             url
           })
           console.log(res)
