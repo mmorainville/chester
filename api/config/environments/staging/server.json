@@ -1,5 +1,5 @@
 {
-  "host": "localhost",
+  "host": "pulsar-chester-staging.herokuapp.com",
   "port": "${process.env.PORT || 1337}",
   "production": true,
   "proxy": {

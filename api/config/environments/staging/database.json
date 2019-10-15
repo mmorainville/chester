@@ -1,7 +1,7 @@
 {
   "defaultConnection": "default",
   "connections": {
-    "default": {
+    "development": {
       "connector": "strapi-hook-bookshelf",
       "settings": {
         "client": "sqlite",
@@ -16,6 +16,21 @@
       "options": {
         "ssl": "${process.env.DATABASE_SSL || false}",
         "authenticationDatabase": "${process.env.DATABASE_AUTHENTICATION_DATABASE || ''}"
+      }
+    },
+    "default": {
+      "connector": "strapi-hook-mongoose",
+      "settings": {
+        "client": "mongo",
+        "uri": "${process.env.DATABASE_URI} || 'mongodb://chester:${process.env.DATABASE_PASSWORD}@cluster0-shard-00-00-itqwj.mongodb.net:27017,cluster0-shard-00-01-itqwj.mongodb.net:27017,cluster0-shard-00-02-itqwj.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true'",
+        "host": "${process.env.DATABASE_HOST || 'cluster0-shard-00-00-itqwj.mongodb.net:27017,cluster0-shard-00-01-itqwj.mongodb.net:27017,cluster0-shard-00-02-itqwj.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true'}",
+        "port": "${process.env.DATABASE_PORT || 27017}",
+        "database": "${process.env.DATABASE_NAME || 'chester-staging'}",
+        "username": "${process.env.DATABASE_USERNAME || 'chester'}",
+        "password": "${process.env.DATABASE_PASSWORD || ''}"
+      },
+      "options": {
+        "ssl": true
       }
     }
   }
