@@ -12,6 +12,9 @@
             .field
               .control
                 input.input(type="text" placeholder="URL" v-model="url")
+            .field
+              .control
+                textarea.textarea(placeholder="Description" v-model="description")
 
             .field
               .control
@@ -26,7 +29,8 @@
     data () {
       return {
         title: this.$route.query.title ? this.$route.query.title : '',
-        url: this.$route.query.url ? this.$route.query.url : ''
+        url: this.$route.query.url ? this.$route.query.url : '',
+        description: ''
       }
     },
 
@@ -34,11 +38,13 @@
       async create () {
         const title = this.title;
         const url = this.url;
+        const description = this.description;
 
         try {
           const res = await this.$axios.$post('links', {
             title,
-            url
+            url,
+            description
           })
           console.log(res)
         } catch (e) {

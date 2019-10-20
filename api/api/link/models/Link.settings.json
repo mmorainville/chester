@@ -29,6 +29,11 @@
     },
     "description": {
       "type": "richtext"
+    },
+    "screenshot": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload"
     }
   }
 }
