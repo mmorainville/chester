@@ -1,5 +1,8 @@
 'use strict';
 
+const axios = require('axios');
+const captureWebsite = require('capture-website');
+
 /**
  * Lifecycle callbacks for the `Link` model.
  */
@@ -20,7 +23,7 @@ module.exports = {
   // After fetching a value.
   // Fired after a `fetch` operation.
   // afterFetch: async (model, response, options) => {},
-  
+
   // Before fetching all values.
   // Fired before a `fetchAll` operation.
   // beforeFetchAll: async (model, columns, options) => {},
@@ -35,7 +38,23 @@ module.exports = {
 
   // After creating a value.
   // Fired after an `insert` query.
-  // afterCreate: async (model, attrs, options) => {},
+  afterCreate: async (model, attrs, options) => {
+    console.log('CREATE A LINK', model);
+    let screenshot = await captureWebsite.buffer(model.attributes.url, {
+      type: 'jpeg',
+      quality: 0.75
+    });
+    console.log('SCREENSHOT', screenshot);
+    // let upload = await axios.post('http://localhost:1337/upload', {
+    //   files: [screenshot]
+    // });
+    await strapi.plugins.upload.services.upload.uploadToEntity({
+      id: model.attributes.id,
+      model: 'link'
+    }, [screenshot], {
+      provider: 'local'
+    });
+  },
 
   // Before updating a value.
   // Fired before an `update` query.
