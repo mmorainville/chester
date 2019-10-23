@@ -1,6 +1,7 @@
 'use strict';
 
-const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 const captureWebsite = require('capture-website');
 
 /**
@@ -39,21 +40,21 @@ module.exports = {
   // After creating a value.
   // Fired after an `insert` query.
   afterCreate: async (model, attrs, options) => {
-    console.log('CREATE A LINK', model);
-    let screenshot = await captureWebsite.buffer(model.attributes.url, {
-      type: 'jpeg',
-      quality: 0.75
-    });
-    console.log('SCREENSHOT', screenshot);
-    // let upload = await axios.post('http://localhost:1337/upload', {
-    //   files: [screenshot]
-    // });
-    await strapi.plugins.upload.services.upload.uploadToEntity({
-      id: model.attributes.id,
-      model: 'link'
-    }, [screenshot], {
-      provider: 'local'
-    });
+    let hostname = new URL(model.attributes.url).hostname;
+
+    let uploadsFolder = path.join(strapi.config.public.path, '/uploads/links');
+    if (!fs.existsSync(uploadsFolder)) {
+      fs.mkdirSync(uploadsFolder);
+    }
+
+    await captureWebsite.file(
+      model.attributes.url,
+      path.join(strapi.config.public.path, `/uploads/links/${model.attributes.id}.${hostname}.png`),
+      {
+        width: 1600,
+        height: 1200,
+        scaleFactor: 1
+      });
   },
 
   // Before updating a value.
