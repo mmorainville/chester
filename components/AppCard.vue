@@ -37,6 +37,6 @@
 
 <style scoped>
   .card {
-    transition: box-shadow 0.5s;
+    transition: box-shadow 0.25s;
   }
 </style>

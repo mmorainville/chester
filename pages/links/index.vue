@@ -3,8 +3,8 @@
     .container
       h2.title.has-text-centered.tw-uppercase Liens et favoris
 
-      .columns
-        .column(v-for="(link, key) of links", :key="key")
+      .columns.is-multiline
+        .column.is-one-third(v-for="(link, key) of links", :key="key")
           app-card(
             :image="getScreenshot(link)",
             :date="link.created_at",
