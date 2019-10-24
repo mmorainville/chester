@@ -21,7 +21,7 @@
                 v-model="tags"
                 :data="filteredTags"
                 autocomplete
-                :allow-new="true"
+                :allow-new="false"
                 :open-on-focus="false"
                 field="name"
                 icon="label"
@@ -93,6 +93,18 @@
         }
 
         this.isFetching = false
+      },
+
+      async addAsyncTag (name) {
+        try {
+          let createdTag = await this.$axios.$post('tags', {
+            name
+          })
+
+          this.tags.push(createdTag)
+        } catch (e) {
+          console.log(e)
+        }
       }
     }
   }
