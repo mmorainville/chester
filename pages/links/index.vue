@@ -10,6 +10,7 @@
             :date="link.created_at",
             :title="link.title",
             :url="link.url"
+            :tags="link.tags"
           )
 </template>
 

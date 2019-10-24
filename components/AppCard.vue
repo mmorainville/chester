@@ -7,6 +7,8 @@
       span.is-size-7 {{ date }}
       h5.title.is-5
         a(:href="url") {{ title }}
+      b-taglist
+        b-tag(v-for="(tag, key) of tags", :key="key") {{ tag.name }}
       a.button.is-primary(:href="url") Ouvrir le lien
   </div>
 </template>
@@ -30,6 +32,10 @@
       url: {
         type: String,
         required: true
+      },
+      tags: {
+        type: Array,
+        required: false
       }
     }
   }
