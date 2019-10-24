@@ -16,6 +16,20 @@
               .control
                 textarea.textarea(placeholder="Description" v-model="description")
 
+            b-field Tags
+              b-taginput(
+                v-model="tags"
+                :data="filteredTags"
+                autocomplete
+                :allow-new="true"
+                :open-on-focus="false"
+                field="name"
+                icon="label"
+                placeholder="Add a tag"
+                :loading="isFetching"
+                @typing="getAsyncFilteredTags"
+              )
+
             .field
               .control
                 button.button.is-primary.is-fullwidth(type="button" @click="create") Créer
@@ -30,26 +44,55 @@
       return {
         title: this.$route.query.title ? this.$route.query.title : '',
         url: this.$route.query.url ? this.$route.query.url : '',
-        description: ''
+        description: '',
+        tags: [],
+
+        filteredTags: [],
+        isFetching: false
       }
     },
 
     methods: {
       async create () {
-        const title = this.title;
-        const url = this.url;
-        const description = this.description;
+        const title = this.title
+        const url = this.url
+        const description = this.description
+        const tags = this.tags
 
         try {
           const res = await this.$axios.$post('links', {
             title,
             url,
-            description
+            description,
+            tags
           })
           console.log(res)
         } catch (e) {
           console.log(e)
         }
+      },
+
+      /**
+       * TODO: export the function in another file
+       */
+      async getAsyncFilteredTags (text) {
+        if (!text.length) {
+          this.filteredTags = []
+          return
+        }
+
+        this.isFetching = true
+
+        try {
+          let filteredTags = await this.$axios.$get(`tags?name_contains=${text}`)
+          this.filteredTags = []
+          filteredTags.forEach((item) => this.filteredTags.push(item))
+        } catch (e) {
+          this.filteredTags = []
+          console.log(e)
+        }
+
+        this.isFetching = false
       }
     }
   }

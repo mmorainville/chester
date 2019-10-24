@@ -47,14 +47,19 @@ module.exports = {
       fs.mkdirSync(uploadsFolder);
     }
 
-    await captureWebsite.file(
-      model.attributes.url,
-      path.join(strapi.config.public.path, `/uploads/links/${model.attributes.id}.${hostname}.png`),
-      {
-        width: 1600,
-        height: 1200,
-        scaleFactor: 1
-      });
+    try {
+      await captureWebsite.file(
+        model.attributes.url,
+        path.join(strapi.config.public.path, `/uploads/links/${model.attributes.id}.${hostname}.png`),
+        {
+          width: 1600,
+          height: 1200,
+          scaleFactor: 1,
+          overwrite: true
+        });
+    } catch (e) {
+      console.log(e);
+    }
   },
 
   // Before updating a value.
