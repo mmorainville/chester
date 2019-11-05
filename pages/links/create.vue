@@ -16,19 +16,25 @@
               .control
                 textarea.textarea(placeholder="Description" v-model="description")
 
-            b-field Tags
-              b-taginput(
-                v-model="tags"
+            b-field(label="Tags")
+              b-autocomplete(
+                v-model="tagName"
                 :data="filteredTags"
-                autocomplete
-                :allow-new="false"
-                :open-on-focus="false"
-                field="name"
-                icon="label"
+                :clear-on-select="true"
+                :open-on-focus="true"
+                :keep-first="true"
                 placeholder="Add a tag"
+                field="name"
                 :loading="isFetching"
                 @typing="getAsyncFilteredTags"
+                @select="pushExistingTag"
               )
+                template(slot="header")
+                  a(@click="addAsyncTag")
+                    span Créer...
+
+            b-taglist
+              b-tag(v-for="(tag, key) of tags", :key="key") {{ tag.name }}
 
             .field
               .control
@@ -45,6 +51,7 @@
         title: this.$route.query.title ? this.$route.query.title : '',
         url: this.$route.query.url ? this.$route.query.url : '',
         description: '',
+        tagName: '',
         tags: [],
 
         filteredTags: [],
@@ -75,7 +82,9 @@
       /**
        * TODO: export the function in another file
        */
-      async getAsyncFilteredTags (text) {
+      async getAsyncFilteredTags () {
+        const text = this.tagName
+
         if (!text.length) {
           this.filteredTags = []
           return
@@ -95,7 +104,9 @@
         this.isFetching = false
       },
 
-      async addAsyncTag (name) {
+      async addAsyncTag () {
+        const name = this.tagName
+
         try {
           let createdTag = await this.$axios.$post('tags', {
             name
@@ -104,6 +115,12 @@
           this.tags.push(createdTag)
         } catch (e) {
           console.log(e)
+        }
+      },
+
+      pushExistingTag (option) {
+        if (option) {
+          this.tags.push(option)
         }
       }
     }
