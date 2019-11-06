@@ -38,7 +38,7 @@
 
             .field
               .control
-                button.button.is-primary.is-fullwidth(type="button" @click="create") Créer
+                button.button.is-primary.is-fullwidth(type="button" @click="create" :class="{ 'is-loading': isFetching }") Créer
 </template>
 
 <script>
@@ -107,15 +107,20 @@
       async addAsyncTag () {
         const name = this.tagName
 
+        this.isFetching = true
+
         try {
           let createdTag = await this.$axios.$post('tags', {
             name
           })
 
           this.tags.push(createdTag)
+          this.tagName = ''
         } catch (e) {
           console.log(e)
         }
+
+        this.isFetching = false
       },
 
       pushExistingTag (option) {
