@@ -66,17 +66,27 @@
         const description = this.description
         const tags = this.tags
 
+        this.isFetching = true
+
         try {
-          const res = await this.$axios.$post('links', {
+          await this.$axios.$post('links', {
             title,
             url,
             description,
             tags
           })
-          console.log(res)
+
+          this.$buefy.snackbar.open(`Lien créé avec succès !`)
         } catch (e) {
           console.log(e)
+
+          this.$buefy.snackbar.open({
+              message: `Un problème est survenu.`,
+              type: 'is-danger'
+          })
         }
+
+        this.isFetching = false
       },
 
       /**
