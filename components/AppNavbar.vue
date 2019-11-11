@@ -3,11 +3,11 @@
     .container
       .navbar-brand
         nuxt-link.navbar-item(:to="{name: 'index'}") Chester
-        a.navbar-burger(role="button", aria-label="menu", aria-expanded="false")
+        a.navbar-burger(role="button", aria-label="menu", aria-expanded="false" @click="isNavbarOpen = !isNavbarOpen" :class="{ 'is-active': isNavbarOpen }")
           span(aria-hidden="true")
           span(aria-hidden="true")
           span(aria-hidden="true")
-      .navbar-menu
+      .navbar-menu(:class="{ 'is-active': isNavbarOpen }")
         .navbar-start
           nuxt-link.navbar-item(v-for="(item, key) of items", :key="key", :to="item.to") {{ item.title }}
           .navbar-item.has-dropdown.is-hoverable
@@ -28,6 +28,8 @@
     name: 'AppNavbar',
     data () {
       return {
+        isNavbarOpen: false,
+
         items: [
           {
             title: 'Home',
