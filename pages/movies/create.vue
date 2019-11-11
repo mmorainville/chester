@@ -11,30 +11,28 @@
                 input(type="text" placeholder="Titre" v-model="title" class="tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-leading-tight")
             .field
               .control
-                input.input(type="text" placeholder="URL" v-model="url")
-            .field
-              .control
-                textarea.textarea(placeholder="Description" v-model="description")
+                input.input(type="number" placeholder="Année" v-model="year")
 
-            b-field(label="Tags")
-              b-autocomplete(
-                v-model="tagName"
-                :data="filteredTags"
-                :clear-on-select="true"
-                :open-on-focus="true"
-                :keep-first="true"
-                placeholder="Add a tag"
-                field="name"
-                :loading="isFetching"
-                @typing="getAsyncFilteredTags"
-                @select="pushExistingTag"
-              )
-                template(slot="header")
-                  a(@click="addAsyncTag")
-                    span Créer...
-
-            b-taglist
-              b-tag(v-for="(tag, key) of tags", :key="key") {{ tag.name }}
+                b-field(label="Titre")
+                  b-autocomplete(
+                    :data='remoteMovies'
+                    placeholder='e.g. Fight Club'
+                    field='title'
+                    :loading='isFetching'
+                    @typing='getAsyncRemoteMovies'
+                    @select='option => selected = option'
+                  )
+                    template(slot-scope='props')
+                      .media
+                        .media-left
+                          img(width='32' :src='`https://image.tmdb.org/t/p/w500/${props.option.poster_path}`')
+                        .media-content
+                          | {{ props.option.title }}
+                          br
+                          small
+                            | Released at {{ props.option.release_date }},
+                            | rated
+                            b {{ props.option.vote_average }}
 
             .field
               .control
@@ -48,13 +46,10 @@
 
     data () {
       return {
-        title: this.$route.query.title ? this.$route.query.title : '',
-        url: this.$route.query.url ? this.$route.query.url : '',
-        description: '',
-        tagName: '',
-        tags: [],
+        title: '',
+        year: null,
 
-        filteredTags: [],
+        remoteMovies: [],
         isFetching: false
       }
     },
@@ -62,18 +57,14 @@
     methods: {
       async create () {
         const title = this.title
-        const url = this.url
-        const description = this.description
-        const tags = this.tags
+        const year = this.year
 
         this.isFetching = true
 
         try {
           await this.$axios.$post('movies', {
             title,
-            url,
-            description,
-            tags
+            year
           })
 
           this.$buefy.snackbar.open(`Film créé avec succès !`)
@@ -89,54 +80,24 @@
         this.isFetching = false
       },
 
-      /**
-       * TODO: export the function in another file
-       */
-      async getAsyncFilteredTags () {
-        const text = this.tagName
-
-        if (!text.length) {
-          this.filteredTags = []
+      getAsyncRemoteMovies (title) {
+        if (!title.length) {
+          this.remoteMovies = []
           return
         }
-
         this.isFetching = true
-
-        try {
-          let filteredTags = await this.$axios.$get(`tags?name_contains=${text}`)
-          this.filteredTags = []
-          filteredTags.forEach((item) => this.filteredTags.push(item))
-        } catch (e) {
-          this.filteredTags = []
-          console.log(e)
-        }
-
-        this.isFetching = false
-      },
-
-      async addAsyncTag () {
-        const name = this.tagName
-
-        this.isFetching = true
-
-        try {
-          let createdTag = await this.$axios.$post('tags', {
-            name
+        this.$axios.$get(`${process.env.TMDB_API_URL}/search/movie?api_key=${process.env.TMDB_API_KEY}&language=fr&query=${title}`)
+          .then(({ data }) => {
+            this.remoteMovies = []
+            data.results.forEach((item) => this.remoteMovies.push(item))
           })
-
-          this.tags.push(createdTag)
-          this.tagName = ''
-        } catch (e) {
-          console.log(e)
-        }
-
-        this.isFetching = false
-      },
-
-      pushExistingTag (option) {
-        if (option) {
-          this.tags.push(option)
-        }
+          .catch((error) => {
+            this.remoteMovies = []
+            throw error
+          })
+          .finally(() => {
+            this.isFetching = false
+          })
       }
     }
   }
