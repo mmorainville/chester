@@ -34,7 +34,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    '@nuxtjs/dotenv'
+    ['@nuxtjs/dotenv', { systemvars: true }]
   ],
   /*
   ** Nuxt.js modules
@@ -48,7 +48,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     // Doc: https://github.com/Developmint/nuxt-purgecss
-    'nuxt-purgecss',
+    // 'nuxt-purgecss',
     // Doc: https://auth.nuxtjs.org/
     '@nuxtjs/auth'
   ],
