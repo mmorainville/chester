@@ -4,7 +4,7 @@
       h2.title.has-text-centered.tw-uppercase Films
 
       .columns.is-multiline
-        .column.is-one-third(v-for="(movie, key) of movies", :key="key")
+        .column.is-one-quarter(v-for="(movie, key) of movies", :key="key")
           app-card(
             :image="getScreenshot(movie)",
             :date="movie.created_at",

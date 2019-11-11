@@ -1,6 +1,6 @@
 <template lang="pug">
   <div class="card tw-rounded tw-border-none tw-shadow-lg hover:tw-shadow-2xl" style="height: 100%">
-    .card-image
+    .card-image(v-if="image")
       a(:href="url")
         img(:src="image", alt="", onerror="this.src='https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2'")
     .card-content
@@ -9,7 +9,7 @@
         a(:href="url") {{ title }}
       b-taglist
         b-tag(v-for="(tag, key) of tags", :key="key") {{ tag.name }}
-      a.button.is-primary(:href="url") Ouvrir le lien
+      a.button.is-primary(:href="url") Ouvrir
   </div>
 </template>
 
@@ -19,7 +19,7 @@
     props: {
       image: {
         type: String,
-        required: true
+        required: false
       },
       date: {
         type: String,
