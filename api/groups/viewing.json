@@ -1,0 +1,31 @@
+{
+  "info": {
+    "name": "viewing",
+    "description": ""
+  },
+  "connection": "default",
+  "collectionName": "groups_viewings",
+  "attributes": {
+    "cinema": {
+      "type": "string"
+    },
+    "filename": {
+      "type": "string"
+    },
+    "cities": {
+      "type": "json"
+    },
+    "dates": {
+      "type": "json"
+    },
+    "spectators": {
+      "type": "json"
+    },
+    "firstTime": {
+      "type": "boolean"
+    },
+    "dateValidity": {
+      "type": "boolean"
+    }
+  }
+}

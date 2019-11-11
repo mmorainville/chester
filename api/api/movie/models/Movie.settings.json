@@ -1,0 +1,39 @@
+{
+  "connection": "default",
+  "collectionName": "movies",
+  "info": {
+    "name": "movie",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": [
+      "created_at",
+      "updated_at"
+    ],
+    "comment": ""
+  },
+  "attributes": {
+    "title": {
+      "required": true,
+      "type": "string"
+    },
+    "year": {
+      "type": "integer",
+      "required": true
+    },
+    "poster": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload"
+    },
+    "directors": {
+      "type": "json"
+    },
+    "viewings": {
+      "group": "viewing",
+      "repeatable": true,
+      "type": "group"
+    }
+  }
+}

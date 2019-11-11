@@ -14,6 +14,7 @@
             a.navbar-link Créer un nouveau...
             .navbar-dropdown
               nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'links-create'}") Lien
+              nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'movies-create'}") Film
         .navbar-end
           .navbar-item
             .buttons
@@ -41,6 +42,10 @@
           {
             title: 'Liens',
             to: {name: 'links'}
+          },
+          {
+            title: 'Films',
+            to: {name: 'movies'}
           }
         ]
       }
