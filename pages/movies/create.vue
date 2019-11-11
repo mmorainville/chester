@@ -27,12 +27,9 @@
                         .media-left
                           img(width='32' :src='`https://image.tmdb.org/t/p/w500/${props.option.poster_path}`')
                         .media-content
-                          | {{ props.option.title }}
+                          strong {{ props.option.title }}
                           br
-                          small
-                            | Released at {{ props.option.release_date }},
-                            | rated
-                            b {{ props.option.vote_average }}
+                          | {{ props.option.release_date ? props.option.release_date.split('-')[0] : 'Date inconnue' }}
 
             .field
               .control
@@ -87,9 +84,9 @@
         }
         this.isFetching = true
         this.$axios.$get(`${process.env.TMDB_API_URL}/search/movie?api_key=${process.env.TMDB_API_KEY}&language=fr&query=${title}`)
-          .then(({ data }) => {
+          .then(({ results }) => {
             this.remoteMovies = []
-            data.results.forEach((item) => this.remoteMovies.push(item))
+            results.forEach((item) => this.remoteMovies.push(item))
           })
           .catch((error) => {
             this.remoteMovies = []
