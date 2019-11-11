@@ -1,83 +1,87 @@
 <template lang="pug">
   section.section
-    .container
+    .container.is-fluid
       h2.title.has-text-centered Créer un nouveau film
 
       .columns.is-centered
-        .column.is-6
-          form
-            .field
-              .control
-                input(type="text" placeholder="Titre" v-model="title" class="tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-leading-tight")
-            .field
-              .control
-                input.input(type="number" placeholder="Année" v-model="year")
+        .column.is-3
+          img(v-if="movieToCreate.poster" :src="`https://image.tmdb.org/t/p/w500/${movieToCreate.poster}`")
 
-                b-field(label="Titre")
-                  b-autocomplete(
-                    :data='remoteMovies'
-                    placeholder='e.g. Fight Club'
-                    field='title'
-                    :loading='isFetching'
-                    @typing='getAsyncRemoteMovies'
-                    @select='option => selected = option'
-                  )
-                    template(slot-scope='props')
-                      .media
-                        .media-left
-                          img(width='32' :src='`https://image.tmdb.org/t/p/w500/${props.option.poster_path}`')
-                        .media-content
-                          strong {{ props.option.title }}
-                          br
-                          | {{ props.option.release_date ? props.option.release_date.split('-')[0] : 'Date inconnue' }}
+        .column.is-5
+          form
+            b-field(label="Titre")
+              b-autocomplete(
+                v-model="movieToCreate.title"
+                :data="remoteMovies"
+                placeholder="Search movies..."
+                field="title"
+                :loading="isFetching"
+                @typing="getAsyncRemoteMovies"
+                @select="onMovieSelect"
+              )
+                template(slot-scope='props')
+                  .media
+                    .media-left
+                      img(width="48" :src="`https://image.tmdb.org/t/p/w500/${props.option.poster_path}`")
+                    .media-content
+                      h1.title.is-4 {{ props.option.title }}
+                      h2.subtitle.is-6 {{ props.option.release_date ? props.option.release_date.split('-')[0] : 'Date inconnue' }}
+
+            .field
+              .control
+                input.input(type="number" placeholder="Année" v-model="movieToCreate.year")
 
             .field
               .control
                 button.button.is-primary.is-fullwidth(type="button" @click="create" :class="{ 'is-loading': isFetching }") Créer
+
+        .column.is-4
+          pre {{ movieToCreate }}
 </template>
 
 <script>
-  export default {
-    name: 'MoviesCreate',
-    middleware: 'auth',
+export default {
+  name: 'MoviesCreate',
+  middleware: 'auth',
 
-    data () {
-      return {
+  data () {
+    return {
+      movieToCreate: {
         title: '',
         year: null,
-
-        remoteMovies: [],
-        isFetching: false
-      }
-    },
-
-    methods: {
-      async create () {
-        const title = this.title
-        const year = this.year
-
-        this.isFetching = true
-
-        try {
-          await this.$axios.$post('movies', {
-            title,
-            year
-          })
-
-          this.$buefy.snackbar.open(`Film créé avec succès !`)
-        } catch (e) {
-          console.log(e)
-
-          this.$buefy.snackbar.open({
-              message: `Un problème est survenu.`,
-              type: 'is-danger'
-          })
-        }
-
-        this.isFetching = false
+        poster: ''
       },
 
-      getAsyncRemoteMovies (title) {
+      remoteMovies: [],
+      isFetching: false
+    }
+  },
+
+  methods: {
+    async create () {
+      const movieToCreate = this.movieToCreate
+
+      this.isFetching = true
+
+      try {
+        await this.$axios.$post('movies', movieToCreate)
+
+        this.$buefy.snackbar.open(`Film créé avec succès !`)
+      } catch (e) {
+        console.log(e)
+
+        this.$buefy.snackbar.open({
+          message: `Un problème est survenu.`,
+          type: 'is-danger'
+        })
+      }
+
+      this.isFetching = false
+    },
+
+    getAsyncRemoteMovies (title) {
+      if (this.timeout) clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
         if (!title.length) {
           this.remoteMovies = []
           return
@@ -95,9 +99,18 @@
           .finally(() => {
             this.isFetching = false
           })
+      }, 250)
+    },
+
+    onMovieSelect (option) {
+      if (option) {
+        this.movieToCreate.title = option.title
+        this.movieToCreate.year = option.release_date ? option.release_date.split('-')[0] : null
+        this.movieToCreate.poster = option.poster_path
       }
     }
   }
+}
 </script>
 
 <style scoped>

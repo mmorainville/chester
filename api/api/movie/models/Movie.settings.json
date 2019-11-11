@@ -19,13 +19,7 @@
       "type": "string"
     },
     "year": {
-      "type": "integer",
-      "required": true
-    },
-    "poster": {
-      "model": "file",
-      "via": "related",
-      "plugin": "upload"
+      "type": "integer"
     },
     "directors": {
       "type": "json"
@@ -34,6 +28,9 @@
       "group": "viewing",
       "repeatable": true,
       "type": "group"
+    },
+    "poster": {
+      "type": "string"
     }
   }
 }

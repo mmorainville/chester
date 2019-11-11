@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/11/2019 1:38:35 PM"
+    "x-generation-date": "11/11/2019 7:07:58 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -3732,8 +3732,7 @@
       "Movie": {
         "required": [
           "id",
-          "title",
-          "year"
+          "title"
         ],
         "properties": {
           "id": {
@@ -3745,52 +3744,6 @@
           "year": {
             "type": "integer"
           },
-          "poster": {
-            "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "sha256": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
-                "type": "string"
-              }
-            }
-          },
           "directors": {
             "type": "object"
           },
@@ -3828,13 +3781,15 @@
                 }
               }
             }
+          },
+          "poster": {
+            "type": "string"
           }
         }
       },
       "NewMovie": {
         "required": [
-          "title",
-          "year"
+          "title"
         ],
         "properties": {
           "title": {
@@ -3880,6 +3835,9 @@
                 }
               }
             }
+          },
+          "poster": {
+            "type": "string"
           }
         }
       },

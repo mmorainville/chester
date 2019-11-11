@@ -8,7 +8,12 @@
           form
             .field
               .control
-                input(type="text" placeholder="Titre" v-model="title" class="tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-leading-tight")
+                input(
+                  type="text"
+                  placeholder="Titre"
+                  v-model="title"
+                  class="tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-leading-tight"
+                )
             .field
               .control
                 input.input(type="text" placeholder="URL" v-model="url")
@@ -27,7 +32,7 @@
                 field="name"
                 :loading="isFetching"
                 @typing="getAsyncFilteredTags"
-                @select="pushExistingTag"
+                @select="onTagSelect"
               )
                 template(slot="header")
                   a(@click="addAsyncTag")
@@ -133,7 +138,7 @@
         this.isFetching = false
       },
 
-      pushExistingTag (option) {
+      onTagSelect (option) {
         if (option) {
           this.tags.push(option)
         }

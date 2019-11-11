@@ -6,7 +6,7 @@
       .columns.is-multiline
         .column.is-one-third(v-for="(link, key) of links", :key="key")
           app-card(
-            :image="getScreenshot(link)",
+            :image="getThumbnail(link)",
             :date="link.created_at",
             :title="link.title",
             :url="link.url"
@@ -31,7 +31,7 @@ export default {
   },
 
   methods: {
-    getScreenshot (link) {
+    getThumbnail (link) {
       if (link.url) {
         let hostname = null
         if (process.browser) {

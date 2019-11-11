@@ -9,7 +9,9 @@
         a(:href="url") {{ title }}
       b-taglist
         b-tag(v-for="(tag, key) of tags", :key="key") {{ tag.name }}
-      a.button.is-primary(:href="url") Ouvrir
+      div.buttons
+        a.button.is-primary(:href="url") Ouvrir
+        a.button(@click="$emit('app-card:on-delete')") Supprimer
   </div>
 </template>
 
@@ -31,7 +33,7 @@
       },
       url: {
         type: String,
-        required: true
+        required: false
       },
       tags: {
         type: Array,
