@@ -48,7 +48,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     // Doc: https://github.com/Developmint/nuxt-purgecss
-    // 'nuxt-purgecss',
+    'nuxt-purgecss',
     // Doc: https://auth.nuxtjs.org/
     '@nuxtjs/auth'
   ],
@@ -74,6 +74,9 @@ export default {
         // tokenType: 'bearer'
       }
     }
+  },
+  purgeCSS: {
+    enabled: false
   },
   /*
   ** Build configuration
