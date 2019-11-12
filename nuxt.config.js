@@ -1,6 +1,10 @@
 
 export default {
   mode: 'universal',
+  env: {
+    TMDB_API_URL: process.env.TMDB_API_URL || 'https://api.themoviedb.org/3',
+    TMDB_API_KEY: process.env.TMDB_API_KEY,
+  },
   /*
   ** Headers of the page
   */
