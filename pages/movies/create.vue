@@ -35,6 +35,14 @@
               .control
                 button.button.is-primary.is-fullwidth(type="button" @click="create" :class="{ 'is-loading': isFetching }") Créer
 
+            div.panel(v-for="(viewing, index) in movieToCreate.viewings" :key="index")
+              p.panel-heading Viewing {{ index }}
+              div.panel-block
+
+                .field
+                  .control
+                    input.input(type="text" placeholder="Cinéma" v-model="viewing.cinema")
+
         .column.is-4
           pre {{ movieToCreate }}
 </template>
@@ -49,7 +57,13 @@ export default {
       movieToCreate: {
         title: '',
         year: null,
-        poster: ''
+        poster: '',
+        viewings: [
+          {
+            cinema: '',
+            filename: ''
+          }
+        ]
       },
 
       remoteMovies: [],
