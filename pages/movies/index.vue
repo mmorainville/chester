@@ -1,7 +1,7 @@
 <template lang="pug">
   section.section
     .container
-      h2.title.has-text-centered.tw-uppercase Films
+      h2.title.has-text-centered.tw-uppercase Movies
 
       .columns.is-multiline
         .column.is-one-quarter(v-for="(movie, key) of movies", :key="key")

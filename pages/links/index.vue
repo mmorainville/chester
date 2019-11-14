@@ -1,7 +1,7 @@
 <template lang="pug">
   section.section
     .container
-      h2.title.has-text-centered.tw-uppercase Liens et favoris
+      h2.title.has-text-centered.tw-uppercase Links and bookmarks
 
       .columns.is-multiline
         .column.is-one-third(v-for="(link, key) of links", :key="key")

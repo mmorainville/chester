@@ -1,7 +1,7 @@
 <template lang="pug">
   section.section
     .container.is-fluid
-      h2.title.has-text-centered Créer un nouveau film
+      h2.title.has-text-centered New movie
 
       .columns.is-centered
         .column.is-3
@@ -25,11 +25,11 @@
                       img(width="48" :src="`https://image.tmdb.org/t/p/w500/${props.option.poster_path}`")
                     .media-content
                       h1.title.is-5 {{ props.option.title }}
-                      h2.subtitle.is-6 {{ props.option.release_date ? props.option.release_date.split('-')[0] : 'Date inconnue' }}
+                      h2.subtitle.is-6 {{ props.option.release_date ? props.option.release_date.split('-')[0] : '-' }}
 
             .field
               .control
-                input.input(type="number" placeholder="Année" v-model="movieToCreate.year")
+                input.input(type="number" placeholder="Year" v-model="movieToCreate.year")
 
             b-field(label='Directors')
               b-taginput(v-model='movieToCreate.directors' placeholder='Directors...')
@@ -41,7 +41,7 @@
                 form
                   .field
                     .control
-                      input.input(type="text" placeholder="Cinéma..." v-model="viewing.cinema")
+                      input.input(type="text" placeholder="Cinema..." v-model="viewing.cinema")
 
                   .field
                     .control
@@ -61,7 +61,7 @@
 
             .field
               .control
-                button.button.is-primary.is-fullwidth(type="button" @click="create" :class="{ 'is-loading': isFetching }") Créer
+                button.button.is-primary.is-fullwidth(type="button" @click="create" :class="{ 'is-loading': isFetching }") Submit
 
         .column.is-4
           pre {{ movieToCreate }}

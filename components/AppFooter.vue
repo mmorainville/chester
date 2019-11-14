@@ -24,7 +24,7 @@
               b-icon(icon="instagram")
 
         .column.has-text-centered.has-text-right-tablet
-          p.subtitle.is-6 &copy; 2019 Pied Piper. All right reserved.
+          p.subtitle.is-6 &copy; 2019 Pulsar. All right reserved.
 </template>
 
 <script>

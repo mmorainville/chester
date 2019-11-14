@@ -11,10 +11,10 @@
         .navbar-start
           nuxt-link.navbar-item(v-for="(item, key) of items", :key="key", :to="item.to") {{ item.title }}
           .navbar-item.has-dropdown.is-hoverable
-            a.navbar-link Créer un nouveau...
+            a.navbar-link New...
             .navbar-dropdown
-              nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'links-create'}") Lien
-              nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'movies-create'}") Film
+              nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'links-create'}") Link
+              nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'movies-create'}") Movie
         .navbar-end
           .navbar-item
             .buttons
@@ -37,16 +37,15 @@
             to: {name: 'index'}
           },
           {
-            title: 'Inspire',
-            icon: 'lightbulb',
-            to: {name: 'inspire'}
+            title: 'About',
+            to: {name: 'about'}
           },
           {
-            title: 'Liens',
+            title: 'Links',
             to: {name: 'links'}
           },
           {
-            title: 'Films',
+            title: 'Movies',
             to: {name: 'movies'}
           }
         ]

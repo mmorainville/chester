@@ -1,7 +1,7 @@
 <template lang="pug">
   section.section
     .container
-      h2.title.has-text-centered Créer un nouveau lien
+      h2.title.has-text-centered New link
 
       .columns.is-centered
         .column.is-6
@@ -10,7 +10,7 @@
               .control
                 input(
                   type="text"
-                  placeholder="Titre"
+                  placeholder="Title"
                   v-model="title"
                   class="tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-leading-tight"
                 )
@@ -36,14 +36,14 @@
               )
                 template(slot="header")
                   a(@click="addAsyncTag")
-                    span Créer...
+                    span Add new...
 
             b-taglist
               b-tag(v-for="(tag, key) of tags", :key="key") {{ tag.name }}
 
             .field
               .control
-                button.button.is-primary.is-fullwidth(type="button" @click="create" :class="{ 'is-loading': isFetching }") Créer
+                button.button.is-primary.is-fullwidth(type="button" @click="create" :class="{ 'is-loading': isFetching }") Submit
 </template>
 
 <script>
