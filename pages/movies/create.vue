@@ -56,6 +56,9 @@
                   b-field(label='Spectators')
                     b-taginput(v-model='viewing.spectators' placeholder='Spectators...')
 
+                  b-checkbox(v-model='viewing.firstTime') First time
+                  b-checkbox(v-model='viewing.dateValidity') Date validity
+
             .field
               .control
                 button.button.is-primary.is-fullwidth(type="button" @click="create" :class="{ 'is-loading': isFetching }") Créer
