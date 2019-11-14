@@ -24,24 +24,41 @@
                     .media-left
                       img(width="48" :src="`https://image.tmdb.org/t/p/w500/${props.option.poster_path}`")
                     .media-content
-                      h1.title.is-4 {{ props.option.title }}
+                      h1.title.is-5 {{ props.option.title }}
                       h2.subtitle.is-6 {{ props.option.release_date ? props.option.release_date.split('-')[0] : 'Date inconnue' }}
 
             .field
               .control
                 input.input(type="number" placeholder="Année" v-model="movieToCreate.year")
 
+            b-field(label='Directors')
+              b-taginput(v-model='movieToCreate.directors' placeholder='Directors...')
+
+            div.panel(v-for="(viewing, index) in movieToCreate.viewings" :key="index")
+              p.panel-heading Viewing \#{{ (index + 1) }}
+              div.panel-block
+
+                form
+                  .field
+                    .control
+                      input.input(type="text" placeholder="Cinéma..." v-model="viewing.cinema")
+
+                  .field
+                    .control
+                      input.input(type="text" placeholder="Filename..." v-model="viewing.filename")
+
+                  b-field(label='Cities')
+                    b-taginput(v-model='viewing.cities' placeholder='Cities...')
+
+                  b-field(label='Dates')
+                    b-taginput(v-model='viewing.dates' placeholder='Dates...')
+
+                  b-field(label='Spectators')
+                    b-taginput(v-model='viewing.spectators' placeholder='Spectators...')
+
             .field
               .control
                 button.button.is-primary.is-fullwidth(type="button" @click="create" :class="{ 'is-loading': isFetching }") Créer
-
-            div.panel(v-for="(viewing, index) in movieToCreate.viewings" :key="index")
-              p.panel-heading Viewing {{ index }}
-              div.panel-block
-
-                .field
-                  .control
-                    input.input(type="text" placeholder="Cinéma" v-model="viewing.cinema")
 
         .column.is-4
           pre {{ movieToCreate }}
@@ -58,10 +75,14 @@ export default {
         title: '',
         year: null,
         poster: '',
+        directors: [],
         viewings: [
           {
             cinema: '',
-            filename: ''
+            filename: '',
+            cities: [],
+            dates: [],
+            spectators: []
           }
         ]
       },
@@ -116,11 +137,14 @@ export default {
       }, 250)
     },
 
-    onMovieSelect (option) {
+    async onMovieSelect (option) {
       if (option) {
         this.movieToCreate.title = option.title
         this.movieToCreate.year = option.release_date ? option.release_date.split('-')[0] : null
         this.movieToCreate.poster = option.poster_path
+
+        let credits = await this.$axios.$get(`${process.env.TMDB_API_URL}/movie/${option.id}/credits?api_key=${process.env.TMDB_API_KEY}`)
+        this.movieToCreate.directors = credits.crew.filter(person => person.job === 'Director').map(person => person.name)
       }
     }
   }
