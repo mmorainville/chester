@@ -2,6 +2,7 @@
   section.section
     .container
       h2.title.has-text-centered.tw-uppercase Movies
+        button.button(@click="exportMovies") Export
 
       .columns.is-multiline
         .column.is-one-quarter(v-for="(movie, key) of movies", :key="key")
@@ -53,10 +54,22 @@ export default {
           type: 'is-danger'
         })
       }
+    },
+
+    exportMovies () {
+      let moviesAsBlob = new Blob([JSON.stringify(this.movies, null, 2)], { type: 'application/json' })
+      let filename = `${new Date().toISOString().substring(0, 19).replace(/[-:]/g, '')}.json`
+
+      const url = URL.createObjectURL(moviesAsBlob)
+
+      const a = document.createElement('a')
+      a.href = url
+      a.download = filename || 'download'
+      a.click()
     }
   },
 
-  async asyncData({ $axios, error }) {
+  async asyncData ({ $axios, error }) {
     try {
       const movies = await $axios.$get('movies')
       return { movies }
