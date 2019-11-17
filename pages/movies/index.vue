@@ -13,17 +13,20 @@
             :url="movie.url"
             :tags="movie.tags"
             @app-card:on-delete="deleteMovie(movie.id)"
+            @app-card:on-edit="editMovie(movie)"
           )
 </template>
 
 <script>
 import AppCard from '~/components/AppCard'
+import MovieForm from '~/components/movies/MovieForm'
 
 export default {
   name: 'Movies',
 
   components: {
-    AppCard
+    AppCard,
+    MovieForm
   },
 
   data () {
@@ -70,6 +73,17 @@ export default {
       a.href = url
       a.download = filename || 'download'
       a.click()
+    },
+
+    editMovie (movie) {
+      this.$buefy.modal.open({
+        parent: this,
+        component: MovieForm,
+        fullScreen: true,
+        props: {
+          movie
+        }
+      })
     }
   },
 
