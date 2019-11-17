@@ -55,7 +55,7 @@ export default {
       try {
         await this.$axios.$delete(`movies/${id}`)
 
-        this.$buefy.snackbar.open(`Film supprimé.`)
+        this.$buefy.snackbar.open(`Movie deleted.`)
       } catch (e) {
         console.log(e)
 
