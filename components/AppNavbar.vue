@@ -18,7 +18,7 @@
         .navbar-end
           .navbar-item
             .buttons
-              button.button(@click="$root.$emit('app-navbar:on-export')") Export
+              button.button(@click="$root.$emit('app-navbar:on-export')" v-if="showExportButton") Export
 
               nuxt-link.button.is-light(:to="{name: 'login'}" v-if="!$auth.loggedIn") Log in
               a.button.is-primary(href="#" v-if="!$auth.loggedIn") Sign up
@@ -51,6 +51,12 @@
             to: {name: 'movies'}
           }
         ]
+      }
+    },
+    computed: {
+      showExportButton () {
+        const routesWithExport = ['links', 'movies']
+        return routesWithExport.includes(this.$nuxt.$route.name)
       }
     }
   }

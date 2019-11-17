@@ -81,12 +81,12 @@
             tags
           })
 
-          this.$buefy.snackbar.open(`Lien créé avec succès !`)
+          this.$buefy.snackbar.open(`Link successfully created!`)
         } catch (e) {
           console.log(e)
 
           this.$buefy.snackbar.open({
-              message: `Un problème est survenu.`,
+              message: `An error occurred..`,
               type: 'is-danger'
           })
         }

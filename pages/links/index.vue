@@ -24,6 +24,14 @@ export default {
     AppCard
   },
 
+  created () {
+    this.$root.$on('app-navbar:on-export', this.exportLinks)
+  },
+
+  destroyed () {
+    this.$root.$off('app-navbar:on-export', this.exportLinks)
+  },
+
   data () {
     return {
       links: []
@@ -45,7 +53,19 @@ export default {
       }
 
       return 'https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2'
-    }
+    },
+
+    exportLinks () {
+      let linksAsBlob = new Blob([JSON.stringify(this.links, null, 2)], { type: 'application/json' })
+      let filename = `${new Date().toISOString().substring(0, 19).replace(/[-:]/g, '')}.json`
+
+      const url = URL.createObjectURL(linksAsBlob)
+
+      const a = document.createElement('a')
+      a.href = url
+      a.download = filename || 'download'
+      a.click()
+    },
   },
 
   async asyncData({ $axios, error }) {

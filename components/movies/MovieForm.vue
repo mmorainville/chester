@@ -1,7 +1,7 @@
 <template lang="pug">
   section.section
     .container.is-fluid
-      h2.title.has-text-centered New movie
+      h2.title.has-text-centered {{ isCreating ? 'New movie' : 'Edit movie' }}
 
       .columns.is-centered
         .column.is-3
@@ -78,10 +78,10 @@
 
             .field
               .control
-                button.button.is-primary.is-fullwidth(type="button" @click="create" :class="{ 'is-loading': isFetching }") Submit
+                button.button.is-primary.is-fullwidth(type="button" @click="createOrEdit" :class="{ 'is-loading': isFetching }") Submit
 
         .column.is-3
-          pre {{ movieToCreateOrEdit }}
+          pre.is-size-7 {{ movieToCreateOrEdit }}
 </template>
 
 <script>
@@ -129,21 +129,35 @@ export default {
     }
   },
 
+  computed: {
+    isCreating () {
+      return !this.movie.id
+    },
+
+    isEditing () {
+      return !!this.movie.id
+    }
+  },
+
   methods: {
-    async create () {
+    async createOrEdit () {
       const movieToCreateOrEdit = this.movieToCreateOrEdit
 
       this.isFetching = true
 
       try {
-        await this.$axios.$post('movies', movieToCreateOrEdit)
+        await this.$axios({
+          method: this.isCreating ? 'post' : 'put',
+          url: `movies${this.isCreating ? '' : `/${this.movie.id}`}`,
+          data: movieToCreateOrEdit
+        })
 
-        this.$buefy.snackbar.open(`Film créé avec succès !`)
+        this.$buefy.snackbar.open(`Movie successfully ${this.isCreating ? 'created' : 'edited'}!`)
       } catch (e) {
         console.log(e)
 
         this.$buefy.snackbar.open({
-          message: `Un problème est survenu.`,
+          message: `An error occurred.`,
           type: 'is-danger'
         })
       }

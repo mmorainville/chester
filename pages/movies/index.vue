@@ -2,7 +2,6 @@
   section.section
     .container
       h2.title.has-text-centered.tw-uppercase Movies
-        button.button(@click="exportMovies") Export
 
       .columns.is-multiline
         .column.is-one-quarter(v-for="(movie, key) of movies", :key="key")
@@ -39,6 +38,10 @@ export default {
     this.$root.$on('app-navbar:on-export', this.exportMovies)
   },
 
+  destroyed () {
+    this.$root.$off('app-navbar:on-export', this.exportMovies)
+  },
+
   methods: {
     getThumbnail (movie) {
       if (movie.poster) {
@@ -57,7 +60,7 @@ export default {
         console.log(e)
 
         this.$buefy.snackbar.open({
-          message: `Un problème est survenu.`,
+          message: `An error occurred..`,
           type: 'is-danger'
         })
       }
