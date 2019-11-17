@@ -11,6 +11,7 @@
         b-tag(v-for="(tag, key) of tags", :key="key") {{ tag.name }}
       div.buttons
         a.button.is-primary(:href="url") View
+        a.button(@click="$emit('app-card:on-edit')") Edit
         a.button(@click="$emit('app-card:on-delete')") Delete
   </div>
 </template>
