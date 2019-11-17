@@ -32,6 +32,10 @@ export default {
     }
   },
 
+  created () {
+    this.$root.$on('app-navbar:on-export', this.exportMovies)
+  },
+
   methods: {
     getThumbnail (movie) {
       if (movie.poster) {

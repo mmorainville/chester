@@ -18,6 +18,8 @@
         .navbar-end
           .navbar-item
             .buttons
+              button.button(@click="$root.$emit('app-navbar:on-export')") Export
+
               nuxt-link.button.is-light(:to="{name: 'login'}" v-if="!$auth.loggedIn") Log in
               a.button.is-primary(href="#" v-if="!$auth.loggedIn") Sign up
               button.button.is-primary(type="button" v-if="$auth.loggedIn" @click="$auth.logout()") Log out
