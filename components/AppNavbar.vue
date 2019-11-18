@@ -28,6 +28,16 @@
 <script>
   export default {
     name: 'AppNavbar',
+
+    async created () {
+      try {
+        let result = await this.$axios.$head('_health')
+        console.log(result)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
     data () {
       return {
         isNavbarOpen: false,
