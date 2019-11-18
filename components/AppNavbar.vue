@@ -16,6 +16,8 @@
               nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'links-create'}") Link
               nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'movies-create'}") Movie
         .navbar-end
+          .navbar-item(v-if="$auth.loggedIn && currentUser")
+            | Hello, {{ currentUser.username }}
           .navbar-item
             .buttons
               button.button(@click="$root.$emit('app-navbar:on-export')" v-if="showExportButton") Export
@@ -31,8 +33,8 @@
 
     async created () {
       try {
-        let result = await this.$axios.$head('_health')
-        console.log(result)
+        // await this.$axios.$head('_health')
+        this.currentUser = await this.$axios.$get('users/me')
       } catch (e) {
         console.log(e)
       }
@@ -41,6 +43,8 @@
     data () {
       return {
         isNavbarOpen: false,
+
+        currentUser: null,
 
         items: [
           {
@@ -63,6 +67,7 @@
         ]
       }
     },
+
     computed: {
       showExportButton () {
         const routesWithExport = ['links', 'movies']
