@@ -16,6 +16,7 @@
     "@nuxtjs/auth": "^4.8.4",
     "@nuxtjs/axios": "^5.8.0",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "dayjs": "^1.8.17",
     "lodash.clonedeep": "^4.5.0",
     "lodash.debounce": "^4.0.8",
     "nuxt": "^2.10.2",

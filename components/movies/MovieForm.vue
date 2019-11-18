@@ -60,7 +60,7 @@
                       b-datepicker(
                         ref="datepicker"
                         placeholder="Date..."
-                        @input="(date) => { viewing.dates.push(date.toISOString().substring(0, 10)) }"
+                        @input="(date) => onSelectDate(date, viewing)"
                         icon="calendar-today"
                       )
 
@@ -87,6 +87,7 @@
 <script>
 import cloneDeep from 'lodash.clonedeep'
 import debounce from 'lodash.debounce'
+import dayjs from 'dayjs'
 
 export default {
   name: 'MovieForm',
@@ -217,6 +218,10 @@ export default {
 
     deleteViewing (index) {
       this.movieToCreateOrEdit.viewings.splice(index, 1)
+    },
+
+    onSelectDate (date, viewing) {
+      viewing.dates.push(dayjs(date).format('YYYY-MM-DD'))
     }
   }
 }
