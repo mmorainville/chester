@@ -3,17 +3,17 @@
     .container.has-text-centered
       .columns.is-centered
         .column.is-5.is-4-desktop
-          form
+          form(@submit.prevent="login")
             .field
               .control
-                input.input(type="email" placeholder="Email" v-model="username")
+                input.input(type="text" placeholder="Username" v-model="username" required)
             .field
               .control
-                input.input(type="password" placeholder="Password" v-model="password")
+                input.input(type="password" placeholder="Password" v-model="password" required)
             .field
-              button.button.is-primary.is-fullwidth(type="button" @click="login") Sign in!
+              button.button.is-primary.is-fullwidth(type="submit" :class="{ 'is-loading': isFetching }") Sign in!
 
-            a(href="#") or sign in with Facebook
+            // a(href="#") or sign in with Facebook
 </template>
 
 <script>
@@ -23,20 +23,32 @@
     data () {
       return {
         username: '',
-        password: ''
+        password: '',
+
+        isFetching: false
       }
     },
 
     methods: {
       login () {
-        console.log('login', this.username, this.password)
+        this.isFetching = true
+
         this.$auth.loginWith('local', {
           data: {
             identifier: this.username,
             password: this.password
           }
         })
-          .then(() => this.$buefy.toast.open('Logged In!'))
+          .then(
+            () => this.$buefy.toast.open('Logged In!'),
+            () => this.$buefy.toast.open({
+              message: `An error occurred.`,
+              type: 'is-danger'
+            })
+          )
+          .finally(
+            () => this.isFetching = false
+          )
       }
     }
   }
