@@ -8,11 +8,11 @@
       h5.title.is-5
         a(:href="url") {{ title }}
       b-taglist
-        b-tag(v-for="(tag, key) of tags", :key="key") {{ tag.name }}
+        b-tag(v-for="(tag, key) of tags" :key="key" rounded) {{ tag.name }}
       div.buttons
-        a.button.is-primary(:href="url") View
-        a.button(@click="$emit('app-card:on-edit')") Edit
-        a.button(@click="$emit('app-card:on-delete')") Delete
+        a.button.is-primary(:href="url" class="is-small is-rounded") View
+        a.button(@click="$emit('app-card:on-edit')" class="is-small is-rounded") Edit
+        a.button(@click="$emit('app-card:on-delete')" class="is-small is-rounded") Delete
   </div>
 </template>
 
