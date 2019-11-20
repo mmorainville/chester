@@ -20,7 +20,7 @@
             | Hello, {{ currentUser.username }}
           .navbar-item
             .buttons
-              button.button(@click="getLinksBookmark" v-if="$nuxt.$route.name === 'links'") Bookmark
+              button.button(@click="getLinksBookmark" v-if="isClient && $nuxt.$route.name === 'links'") Bookmark
               button.button(@click="$root.$emit('app-navbar:on-export')" v-if="showExportButton") Export
 
               nuxt-link.button.is-light(:to="{name: 'login'}" v-if="!$auth.loggedIn") Log in
@@ -73,13 +73,36 @@
       showExportButton () {
         const routesWithExport = ['links', 'movies']
         return routesWithExport.includes(this.$nuxt.$route.name)
+      },
+
+      isClient () {
+        return process.client
       }
     },
 
     methods: {
       getLinksBookmark () {
         const origin = window.location.origin
-        console.log(`javascript:(function(){var%20url%20=%20location.href;%20%20%20%20%20%20var%20title%20=%20document.title%20||%20url;%20%20%20%20%20%20window.open('${origin}/links/create?url='%20+%20encodeURIComponent(url)+'&title='%20+%20encodeURIComponent(title),'_blank','height=600,width=800');})();`)
+        const bookmark = `javascript:(function(){var%20url%20=%20location.href;%20%20%20%20%20%20var%20title%20=%20document.title%20||%20url;%20%20%20%20%20%20window.open('${origin}/links/create?url='%20+%20encodeURIComponent(url)+'&title='%20+%20encodeURIComponent(title),'_blank','height=600,width=800');})();`
+        console.log(bookmark)
+
+        navigator.permissions.query({ name: 'clipboard-write' }).then(async result => {
+          if (result.state === 'granted' || result.state === 'prompt') {
+            try {
+              await navigator.clipboard.writeText(bookmark)
+
+              this.$buefy.toast.open({
+                message: 'Bookmark copied!',
+                type: 'is-success'
+              })
+            } catch (error) {
+              this.$buefy.toast.open({
+                message: 'An error occurred.',
+                type: 'is-danger'
+              })
+            }
+          }
+        })
       }
     }
   }
