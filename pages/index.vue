@@ -1,23 +1,21 @@
 <template lang="pug">
   section.section
     .container
-      h2.title.has-text-centered.tw-uppercase Accueil
+      h2.title.has-text-centered.tw-uppercase Welcome to Chester!
 
-      .columns.is-multiline
+      .columns.is-multiline.is-centered
         .column.is-one-third
           app-card(
-            image="https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2",
-            date="25 Jun 2019",
-            title="Secrets of Decentralization"
-            url="https://www.google.fr/"
+            date="2019",
+            title="Links"
+            url="/links"
           )
 
         .column.is-one-third
           app-card(
-            image="https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2",
-            date="25 Jun 2019",
-            title="Why Strong Tea Isn't Good"
-            url="https://www.google.fr/"
+            date="2019",
+            title="Movies"
+            url="/movies"
           )
 </template>
 

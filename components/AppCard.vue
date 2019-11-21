@@ -7,7 +7,7 @@
       span.is-size-7 {{ date }}
       h5.title.is-5
         a(:href="url") {{ title }}
-      b-taglist
+      b-taglist(v-if="tags")
         b-tag(v-for="(tag, key) of tags" :key="key" rounded) {{ tag.name }}
       div.buttons
         a.button.is-primary(:href="url" class="is-small is-rounded") View
