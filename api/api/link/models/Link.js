@@ -35,39 +35,28 @@ module.exports = {
 
   // Before creating a value.
   // Fired before an `insert` query.
-  // beforeCreate: async (model, attrs, options) => {},
-
-  // After creating a value.
-  // Fired after an `insert` query.
-  afterCreate: async (model, attrs, options) => {
-    let hostname = null;
-    try {
-      hostname = new URL(model.attributes.url).hostname;
-    } catch (e) {
-      console.log(e);
-    }
-
-    if (hostname) {
-      let uploadsFolder = path.join(strapi.config.public.path, '/uploads/links');
-      if (!fs.existsSync(uploadsFolder)) {
-        fs.mkdirSync(uploadsFolder);
-      }
-
+  beforeCreate: async (model, attrs, options) => {
+    if (model.attributes.url) {
       try {
-        await captureWebsite.file(
+        let buffer = await captureWebsite.base64(
           model.attributes.url,
-          path.join(strapi.config.public.path, `/uploads/links/${model.attributes.id}.${hostname}.png`),
           {
             width: 1600,
             height: 1200,
-            scaleFactor: 1,
-            overwrite: true
+            scaleFactor: 1
           });
+
+        let base64 = buffer.toString('base64');
+        model.attributes.screenshot = `data:image/png;base64,${base64}`;
       } catch (e) {
         console.log(e);
       }
     }
   },
+
+  // After creating a value.
+  // Fired after an `insert` query.
+  // afterCreate: async (model, attrs, options) => {},
 
   // Before updating a value.
   // Fired before an `update` query.

@@ -40,16 +40,8 @@ export default {
 
   methods: {
     getThumbnail (link) {
-      if (link.url) {
-        let hostname = null
-        if (process.browser) {
-          hostname = new URL(link.url).hostname
-        } else {
-          const URL = require('url').URL
-          hostname = new URL(link.url).hostname
-        }
-
-        return `${process.env.BASE_URL || 'http://localhost:1337/'}uploads/links/${link.id}.${hostname}.png`
+      if (link.url && link.screenshot) {
+        return link.screenshot
       }
 
       return 'https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2'
