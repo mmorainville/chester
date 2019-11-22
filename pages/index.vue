@@ -5,18 +5,16 @@
 
       .columns.is-multiline.is-centered
         .column.is-one-third
-          app-card(
-            date="2019",
-            title="Links"
-            url="/links"
-          )
+          app-card(title="Links" url="/links")
+            template(#actions)
+              div.buttons
+                nuxt-link.button.is-primary.is-small.is-rounded(:to="{name: 'links'}") View
 
         .column.is-one-third
-          app-card(
-            date="2019",
-            title="Movies"
-            url="/movies"
-          )
+          app-card(title="Movies" url="/movies")
+            template(#actions)
+              div.buttons
+                nuxt-link.button.is-primary.is-small.is-rounded(:to="{name: 'movies'}") View
 </template>
 
 <script>

@@ -1,19 +1,21 @@
 <template lang="pug">
-  <div class="card tw-rounded tw-border-none tw-shadow-lg hover:tw-shadow-2xl" style="height: 100%">
+  div(class="card tw-rounded tw-border-none tw-shadow-lg hover:tw-shadow-2xl" style="height: 100%")
     .card-image(v-if="image")
       a(:href="url")
         img(:src="image", alt="", onerror="this.src='https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2'")
+
     .card-content
-      span.is-size-7 {{ date }}
+      span.is-size-7(v-if="date") {{ date }}
       h5.title.is-5
         a(:href="url") {{ title }}
       b-taglist(v-if="tags")
         b-tag(v-for="(tag, key) of tags" :key="key" rounded) {{ tag.name }}
-      div.buttons
-        a.button.is-primary(:href="url" class="is-small is-rounded") View
-        a.button(@click="$emit('app-card:on-edit')" class="is-small is-rounded") Edit
-        a.button(@click="$emit('app-card:on-delete')" class="is-small is-rounded") Delete
-  </div>
+
+      slot(name="actions")
+        div.buttons
+          a.button.is-primary.is-small.is-rounded(:href="url") View
+          a.button.is-small.is-rounded(@click="$emit('app-card:on-edit')") Edit
+          a.button.is-small.is-rounded(@click="$emit('app-card:on-delete')") Delete
 </template>
 
 <script>
@@ -26,7 +28,7 @@
       },
       date: {
         type: String,
-        required: true
+        required: false
       },
       title: {
         type: String,

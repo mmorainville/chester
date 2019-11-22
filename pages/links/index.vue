@@ -66,7 +66,7 @@ export default {
       return { links }
     } catch (e) {
       console.log(e)
-      error({ statusCode: e.response.status, message: 'Accès non autorisé.' })
+      error({ statusCode: e.response.status, message: 'Access not allowed.' })
     }
   }
 }

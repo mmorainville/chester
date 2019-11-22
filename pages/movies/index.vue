@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 import AppCard from '~/components/AppCard'
 import MovieForm from '~/components/movies/MovieForm'
 
@@ -68,7 +69,7 @@ export default {
 
     exportMovies () {
       let moviesAsBlob = new Blob([JSON.stringify(this.movies, null, 2)], { type: 'application/json' })
-      let filename = `${new Date().toISOString().substring(0, 19).replace(/[-:]/g, '')}.json`
+      let filename = `${dayjs().format('YYYY-MM-DDTHH:mm:ss')} (${this.movies.length}).json`
 
       const url = URL.createObjectURL(moviesAsBlob)
 
@@ -96,7 +97,7 @@ export default {
       return { movies }
     } catch (e) {
       console.log(e)
-      error({ statusCode: e.response.status, message: 'Accès non autorisé.' })
+      error({ statusCode: e.response.status, message: 'Access not allowed.' })
     }
   }
 }
