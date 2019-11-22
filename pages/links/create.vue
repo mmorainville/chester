@@ -86,7 +86,7 @@
           console.log(e)
 
           this.$buefy.snackbar.open({
-              message: `An error occurred..`,
+              message: `An error occurred.`,
               type: 'is-danger'
           })
         }

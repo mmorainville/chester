@@ -19,6 +19,7 @@
 <script>
 import AppCard from '~/components/AppCard'
 import MovieForm from '~/components/movies/MovieForm'
+import crudMixin from '~/mixins/crud'
 import exportMixin from '~/mixins/export'
 
 export default {
@@ -29,7 +30,7 @@ export default {
     MovieForm
   },
 
-  mixins: [exportMixin],
+  mixins: [crudMixin, exportMixin],
 
   data () {
     return {
@@ -55,18 +56,7 @@ export default {
     },
 
     async deleteMovie (id) {
-      try {
-        await this.$axios.$delete(`movies/${id}`)
-
-        this.$buefy.snackbar.open(`Movie deleted.`)
-      } catch (e) {
-        console.log(e)
-
-        this.$buefy.snackbar.open({
-          message: `An error occurred..`,
-          type: 'is-danger'
-        })
-      }
+      this.delete(`movies/${id}`, `Movie deleted.`)
     },
 
     exportMovies () {

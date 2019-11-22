@@ -4,18 +4,20 @@
       h2.title.has-text-centered.tw-uppercase Links and bookmarks
 
       .columns.is-multiline
-        .column.is-one-third(v-for="(link, key) of links", :key="key")
+        .column.is-one-quarter(v-for="(link, key) of links", :key="key")
           app-card(
             :image="getThumbnail(link)",
             :date="link.created_at",
             :title="link.title",
             :url="link.url"
             :tags="link.tags"
+            @app-card:on-delete="deleteLink(link.id)"
           )
 </template>
 
 <script>
 import AppCard from '~/components/AppCard'
+import crudMixin from '~/mixins/crud'
 import exportMixin from '~/mixins/export'
 
 export default {
@@ -25,7 +27,7 @@ export default {
     AppCard
   },
 
-  mixins: [exportMixin],
+  mixins: [crudMixin, exportMixin],
 
   created () {
     this.$root.$on('app-navbar:on-export', this.exportLinks)
@@ -48,6 +50,10 @@ export default {
       }
 
       return 'https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2'
+    },
+
+    async deleteLink (id) {
+      this.delete(`links/${id}`, `Link deleted.`)
     },
 
     exportLinks () {
