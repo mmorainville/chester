@@ -5,7 +5,7 @@
         img(:src="image", alt="", onerror="this.src='https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2'")
 
     .card-content
-      span.is-size-7(v-if="date") {{ date }}
+      span.is-size-7(v-if="date") {{ date | date('YYYY/MM/DD') }}
       h5.title.is-5
         a(:href="url") {{ title }}
       b-taglist(v-if="tags")
