@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import AppCard from '~/components/AppCard'
 import MovieForm from '~/components/movies/MovieForm'
+import exportMixin from '~/mixins/export'
 
 export default {
   name: 'Movies',
@@ -28,6 +28,8 @@ export default {
     AppCard,
     MovieForm
   },
+
+  mixins: [exportMixin],
 
   data () {
     return {
@@ -68,15 +70,7 @@ export default {
     },
 
     exportMovies () {
-      let moviesAsBlob = new Blob([JSON.stringify(this.movies, null, 2)], { type: 'application/json' })
-      let filename = `${dayjs().format('YYYY-MM-DDTHH:mm:ss')} (${this.movies.length}).json`
-
-      const url = URL.createObjectURL(moviesAsBlob)
-
-      const a = document.createElement('a')
-      a.href = url
-      a.download = filename || 'download'
-      a.click()
+      this.export(this.movies)
     },
 
     editMovie (movie) {

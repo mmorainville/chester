@@ -16,6 +16,7 @@
 
 <script>
 import AppCard from '~/components/AppCard'
+import exportMixin from '~/mixins/export'
 
 export default {
   name: 'Links',
@@ -23,6 +24,8 @@ export default {
   components: {
     AppCard
   },
+
+  mixins: [exportMixin],
 
   created () {
     this.$root.$on('app-navbar:on-export', this.exportLinks)
@@ -48,15 +51,7 @@ export default {
     },
 
     exportLinks () {
-      let linksAsBlob = new Blob([JSON.stringify(this.links, null, 2)], { type: 'application/json' })
-      let filename = `${new Date().toISOString().substring(0, 19).replace(/[-:]/g, '')}.json`
-
-      const url = URL.createObjectURL(linksAsBlob)
-
-      const a = document.createElement('a')
-      a.href = url
-      a.download = filename || 'download'
-      a.click()
+      this.export(this.links)
     },
   },
 
