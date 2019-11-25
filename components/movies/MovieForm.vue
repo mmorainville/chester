@@ -8,7 +8,7 @@
           img(v-if="movieToCreateOrEdit.poster" :src="`https://image.tmdb.org/t/p/w500/${movieToCreateOrEdit.poster}`")
 
         .column.is-6
-          form
+          form(@submit.prevent="createOrEdit")
             b-field(label="Titre")
               b-autocomplete(
                 v-model="movieToCreateOrEdit.title"
@@ -78,7 +78,7 @@
 
             .field
               .control
-                button.button.is-primary.is-fullwidth(type="button" @click="createOrEdit" :class="{ 'is-loading': isFetching }") Submit
+                button.button.is-primary.is-fullwidth(type="submit" :class="{ 'is-loading': isFetching }") Submit
 
         .column.is-3
           pre.is-size-7 {{ movieToCreateOrEdit }}

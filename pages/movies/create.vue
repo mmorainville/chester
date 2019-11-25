@@ -1,5 +1,5 @@
 <template lang="pug">
-  <MovieForm />
+  MovieForm
 </template>
 
 <script>

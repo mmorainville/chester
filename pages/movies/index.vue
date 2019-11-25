@@ -40,10 +40,12 @@ export default {
 
   created () {
     this.$root.$on('app-navbar:on-export', this.exportMovies)
+    this.$root.$on('crud-mixin:on-refresh', this.findAllMovies)
   },
 
   destroyed () {
     this.$root.$off('app-navbar:on-export', this.exportMovies)
+    this.$root.$on('crud-mixin:on-refresh', this.findAllMovies)
   },
 
   methods: {
@@ -55,8 +57,12 @@ export default {
       return 'https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2'
     },
 
+    async findAllMovies () {
+      this.movies = await this.findAll('movies')
+    },
+
     async deleteMovie (id) {
-      this.delete(`movies/${id}`, `Movie deleted.`)
+      this.delete('movies', id, `Movie deleted.`)
     },
 
     exportMovies () {
