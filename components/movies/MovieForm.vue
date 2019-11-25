@@ -154,6 +154,7 @@ export default {
         })
 
         this.$buefy.snackbar.open(`Movie successfully ${this.isCreating ? 'created' : 'edited'}!`)
+        this.$router.push('/movies')
       } catch (e) {
         console.log(e)
 

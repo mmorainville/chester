@@ -103,6 +103,7 @@ export default {
         })
 
         this.$buefy.snackbar.open(`Link successfully ${this.isCreating ? 'created' : 'edited'}!`)
+        this.$router.push('/links')
       } catch (e) {
         console.log(e)
 
