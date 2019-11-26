@@ -9,11 +9,28 @@
 </template>
 
 <script>
-  import AppFooter from '~/components/AppFooter'
-  import AppNavbar from '~/components/AppNavbar'
-  import AppCard from '~/components/AppCard'
+import AppFooter from '~/components/AppFooter'
+import AppNavbar from '~/components/AppNavbar'
+import AppCard from '~/components/AppCard'
 
-  export default {
-    components: {AppCard, AppNavbar, AppFooter}
+export default {
+  components: { AppCard, AppNavbar, AppFooter },
+
+  computed: {
+    pendingRequests () {
+      return this.$store.state.app.pendingRequests
+    }
+  },
+
+  watch: {
+    pendingRequests (newValue, oldValue) {
+      console.log(newValue)
+      if (newValue === 1) {
+        this.$buefy.loading.open()
+      } else if (newValue === 0) {
+        this.$buefy.loading.close()
+      }
+    }
   }
+}
 </script>
