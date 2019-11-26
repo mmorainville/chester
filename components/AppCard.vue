@@ -12,10 +12,10 @@
         b-tag(v-for="(tag, key) of tags" :key="key" rounded) {{ tag.name }}
 
       slot(name="actions")
-        div.buttons
-          a.button.is-primary.is-small.is-rounded(:href="url") View
+        div.buttons(v-if="$auth.loggedIn")
+          a.button.is-primary.is-small.is-rounded(v-if="url" :href="url") View
           a.button.is-small.is-rounded(@click="$emit('app-card:on-edit')") Edit
-          a.button.is-small.is-rounded(@click="$emit('app-card:on-delete')") Delete
+          a.button.is-small.is-rounded.is-danger.is-outlined(@click="$emit('app-card:on-delete')") Delete
 </template>
 
 <script>

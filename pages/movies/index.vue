@@ -15,8 +15,6 @@
             :image="getThumbnail(movie)",
             :date="movie.created_at",
             :title="movie.title",
-            :url="movie.url"
-            :tags="movie.tags"
             @app-card:on-delete="deleteMovie(movie.id)"
             @app-card:on-edit="editMovie(movie)"
           )

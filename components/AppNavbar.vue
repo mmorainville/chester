@@ -30,19 +30,16 @@ export default {
   name: 'AppNavbar',
 
   async created () {
-    try {
-      await this.$axios.$head('_health')
-      // this.currentUser = await this.$axios.$get('users/me')
-    } catch (e) {
-      console.log(e)
-    }
+    // try {
+    //   await this.$axios.$head('_health')
+    // } catch (e) {
+    //   console.log(e)
+    // }
   },
 
   data () {
     return {
       isNavbarOpen: false,
-
-      currentUser: null,
 
       items: [
         {

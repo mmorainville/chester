@@ -9,12 +9,18 @@
 </template>
 
 <script>
-import AppFooter from '~/components/AppFooter'
 import AppNavbar from '~/components/AppNavbar'
+import AppFooter from '~/components/AppFooter'
 import AppCard from '~/components/AppCard'
 
 export default {
   components: { AppCard, AppNavbar, AppFooter },
+
+  data () {
+    return {
+      loadingComponent: null
+    }
+  },
 
   computed: {
     pendingRequests () {
@@ -24,11 +30,14 @@ export default {
 
   watch: {
     pendingRequests (newValue, oldValue) {
-      console.log(newValue)
+      console.log('pendingRequests', newValue)
       if (newValue === 1) {
-        this.$buefy.loading.open()
+        this.loadingComponent = this.$buefy.loading.open()
       } else if (newValue === 0) {
-        this.$buefy.loading.close()
+        if (this.loadingComponent) {
+          this.loadingComponent.close()
+        }
+        this.loadingComponent = null
       }
     }
   }
