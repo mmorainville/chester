@@ -1,7 +1,13 @@
 <template lang="pug">
   section.section
     .container
-      h2.title.has-text-centered.tw-uppercase Movies
+      nav.level
+        .level-left
+          .level-item
+            h2.title.has-text-centered.tw-uppercase {{ movies.length }} Movies
+        .level-right
+          .level-item
+            button.button(@click="$root.$emit('app-navbar:on-export')") Export
 
       .columns.is-multiline
         .column.is-one-quarter(v-for="(movie, index) in movies", :key="index")

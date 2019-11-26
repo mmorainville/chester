@@ -1,7 +1,15 @@
 <template lang="pug">
   section.section
     .container
-      h2.title.has-text-centered.tw-uppercase Links and bookmarks
+      nav.level
+        .level-left
+          .level-item
+            h2.title.has-text-centered.tw-uppercase {{ links.length }} Links
+        .level-right
+          .level-item
+            .buttons
+              button.button(@click="getLinksBookmark" v-if="isClient") Bookmark
+              button.button(@click="$root.$emit('app-navbar:on-export')") Export
 
       .columns.is-multiline
         .column.is-one-quarter(v-for="(link, key) of links", :key="key")
@@ -47,6 +55,12 @@ export default {
     }
   },
 
+  computed: {
+    isClient () {
+      return process.client
+    }
+  },
+
   methods: {
     getThumbnail (link) {
       if (link.url && link.screenshot) {
@@ -75,6 +89,30 @@ export default {
         fullScreen: true,
         props: {
           link
+        }
+      })
+    },
+
+    getLinksBookmark () {
+      const origin = window.location.origin
+      const bookmark = `javascript:(function(){var%20url%20=%20location.href;%20%20%20%20%20%20var%20title%20=%20document.title%20||%20url;%20%20%20%20%20%20window.open('${origin}/links/create?url='%20+%20encodeURIComponent(url)+'&title='%20+%20encodeURIComponent(title),'_blank','height=600,width=800');})();`
+      console.log(bookmark)
+
+      navigator.permissions.query({ name: 'clipboard-write' }).then(async result => {
+        if (result.state === 'granted' || result.state === 'prompt') {
+          try {
+            await navigator.clipboard.writeText(bookmark)
+
+            this.$buefy.toast.open({
+              message: 'Bookmark copied!',
+              type: 'is-success'
+            })
+          } catch (error) {
+            this.$buefy.toast.open({
+              message: 'An error occurred.',
+              type: 'is-danger'
+            })
+          }
         }
       })
     }
