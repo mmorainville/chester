@@ -8,7 +8,7 @@
           img(v-if="movieToCreateOrEdit.poster" :src="`https://image.tmdb.org/t/p/w500/${movieToCreateOrEdit.poster}`")
 
         .column.is-6
-          form(@submit.prevent="createOrEdit")
+          form(@submit.prevent="createOrEditMovie")
             b-field(label="Titre")
               b-autocomplete(
                 v-model="movieToCreateOrEdit.title"
@@ -88,10 +88,13 @@
 import cloneDeep from 'lodash.clonedeep'
 import debounce from 'lodash.debounce'
 import dayjs from 'dayjs'
+import crudFormMixin from '~/mixins/crudForm'
 
 export default {
   name: 'MovieForm',
   middleware: 'auth',
+
+  mixins: [crudFormMixin],
 
   props: {
     movie: {
@@ -121,50 +124,19 @@ export default {
 
   data () {
     return {
+      itemToCreateOrEdit: cloneDeep(this.movie),
       movieToCreateOrEdit: cloneDeep(this.movie),
 
       activeViewing: 0,
 
-      remoteMovies: [],
-      isFetching: false
-    }
-  },
-
-  computed: {
-    isCreating () {
-      return !this.movie.id
-    },
-
-    isEditing () {
-      return !!this.movie.id
+      remoteMovies: []
     }
   },
 
   methods: {
-    async createOrEdit () {
+    async createOrEditMovie () {
       const movieToCreateOrEdit = this.movieToCreateOrEdit
-
-      this.isFetching = true
-
-      try {
-        await this.$axios({
-          method: this.isCreating ? 'post' : 'put',
-          url: `movies${this.isCreating ? '' : `/${this.movie.id}`}`,
-          data: movieToCreateOrEdit
-        })
-
-        this.$buefy.snackbar.open(`Movie successfully ${this.isCreating ? 'created' : 'edited'}!`)
-        this.$router.push('/movies')
-      } catch (e) {
-        console.log(e)
-
-        this.$buefy.snackbar.open({
-          message: `An error occurred.`,
-          type: 'is-danger'
-        })
-      }
-
-      this.isFetching = false
+      this.createOrEdit('movies', movieToCreateOrEdit, `Movie successfully ${this.isCreating ? 'created' : 'edited'}!`)
     },
 
     getAsyncRemoteMoviesWithDebounce: debounce(function(title) {

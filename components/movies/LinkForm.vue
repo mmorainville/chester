@@ -5,7 +5,7 @@
 
       .columns.is-centered
         .column.is-6
-          form(@submit.prevent="createOrEdit")
+          form(@submit.prevent="createOrEditLink")
             .field
               .control
                 input(
@@ -48,10 +48,13 @@
 
 <script>
 import cloneDeep from 'lodash.clonedeep'
+import crudFormMixin from '~/mixins/crudForm'
 
 export default {
   name: 'LinkForm',
   middleware: 'auth',
+
+  mixins: [crudFormMixin],
 
   props: {
     link: {
@@ -70,50 +73,18 @@ export default {
 
   data () {
     return {
+      itemToCreateOrEdit: cloneDeep(this.link),
       linkToCreateOrEdit: cloneDeep(this.link),
 
       tagName: '',
-      filteredTags: [],
-
-      isFetching: false
-    }
-  },
-
-  computed: {
-    isCreating () {
-      return !this.link.id
-    },
-
-    isEditing () {
-      return !!this.link.id
+      filteredTags: []
     }
   },
 
   methods: {
-    async createOrEdit () {
+    async createOrEditLink () {
       const linkToCreateOrEdit = this.linkToCreateOrEdit
-
-      this.isFetching = true
-
-      try {
-        await this.$axios({
-          method: this.isCreating ? 'post' : 'put',
-          url: `links${this.isCreating ? '' : `/${this.link.id}`}`,
-          data: linkToCreateOrEdit
-        })
-
-        this.$buefy.snackbar.open(`Link successfully ${this.isCreating ? 'created' : 'edited'}!`)
-        this.$router.push('/links')
-      } catch (e) {
-        console.log(e)
-
-        this.$buefy.snackbar.open({
-          message: `An error occurred.`,
-          type: 'is-danger'
-        })
-      }
-
-      this.isFetching = false
+      this.createOrEdit('links', linkToCreateOrEdit, `Link successfully ${this.isCreating ? 'created' : 'edited'}!`)
     },
 
     /**
