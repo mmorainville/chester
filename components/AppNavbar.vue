@@ -16,8 +16,8 @@
               nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'links-create'}") Link
               nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'movies-create'}") Movie
         .navbar-end
-          .navbar-item(v-if="$auth.loggedIn && currentUser")
-            | Hello, {{ currentUser.username }}
+          .navbar-item(v-if="$auth.loggedIn && $auth.user.username")
+            | Hello, {{ $auth.user.username }}
           .navbar-item
             .buttons
               nuxt-link.button.is-light(:to="{name: 'login'}" v-if="!$auth.loggedIn") Log in
@@ -31,8 +31,8 @@ export default {
 
   async created () {
     try {
-      // await this.$axios.$head('_health')
-      this.currentUser = await this.$axios.$get('users/me')
+      await this.$axios.$head('_health')
+      // this.currentUser = await this.$axios.$get('users/me')
     } catch (e) {
       console.log(e)
     }
