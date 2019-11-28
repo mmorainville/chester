@@ -26,7 +26,7 @@
     "mode": "block"
   },
   "cors": {
-    "enabled": false
+    "enabled": true
   },
   "ip": {
     "enabled": false,
