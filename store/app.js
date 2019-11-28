@@ -11,3 +11,9 @@ export const mutations = {
     state.pendingRequests--
   }
 }
+
+export const getters = {
+  isLoading: state => {
+    return state.pendingRequests > 0
+  }
+}

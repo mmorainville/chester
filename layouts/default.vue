@@ -3,12 +3,15 @@
 
     app-navbar.tw-bg-transparent
 
+    b-loading(:active.sync="isLoading")
+
     nuxt
 
     app-footer
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import AppNavbar from '~/components/AppNavbar'
 import AppFooter from '~/components/AppFooter'
 import AppCard from '~/components/AppCard'
@@ -16,30 +19,16 @@ import AppCard from '~/components/AppCard'
 export default {
   components: { AppCard, AppNavbar, AppFooter },
 
-  data () {
+  data() {
     return {
       loadingComponent: null
     }
   },
 
   computed: {
-    pendingRequests () {
-      return this.$store.state.app.pendingRequests
-    }
-  },
-
-  watch: {
-    pendingRequests (newValue, oldValue) {
-      console.log('pendingRequests', newValue)
-      if (newValue === 1) {
-        this.loadingComponent = this.$buefy.loading.open()
-      } else if (newValue === 0) {
-        if (this.loadingComponent) {
-          this.loadingComponent.close()
-        }
-        this.loadingComponent = null
-      }
-    }
+    ...mapGetters({
+      isLoading: 'app/isLoading'
+    })
   }
 }
 </script>
