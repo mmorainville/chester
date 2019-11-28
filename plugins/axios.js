@@ -4,18 +4,13 @@ export default function({ $axios, redirect, store }) {
     store.commit('app/incrementPendingRequests')
   })
 
-  $axios.onResponse(response => {
-    console.log('onResponse', response.config.url, response.status)
-    store.commit('app/decrementPendingRequests')
-  })
-
-  $axios.onError(error => {
-    console.log('onError', error)
-    store.commit('app/decrementPendingRequests')
-  })
-
   $axios.onRequestError(error => {
     console.log('onRequestError', error)
+    store.commit('app/decrementPendingRequests')
+  })
+
+  $axios.onResponse(response => {
+    console.log('onResponse', response.config.url, response.status)
     store.commit('app/decrementPendingRequests')
   })
 
