@@ -43,7 +43,7 @@ module.exports = {
           {
             width: 1600,
             height: 1200,
-            scaleFactor: 1
+            scaleFactor: 0.25
           });
 
         let base64 = buffer.toString('base64');
