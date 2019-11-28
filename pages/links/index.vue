@@ -8,7 +8,7 @@
         .level-right
           .level-item
             .buttons
-              button.button(@click="getLinksBookmark" v-if="isClient") Bookmark
+              button.button(@click="getLinksBookmark") Bookmark
               button.button(@click="$root.$emit('app-navbar:on-export')") Export
 
       .columns.is-multiline
@@ -55,12 +55,6 @@ export default {
     }
   },
 
-  computed: {
-    isClient () {
-      return process.client
-    }
-  },
-
   methods: {
     getThumbnail (link) {
       if (link.url && link.screenshot) {
@@ -94,27 +88,29 @@ export default {
     },
 
     getLinksBookmark () {
-      const origin = window.location.origin
-      const bookmark = `javascript:(function(){var%20url%20=%20location.href;%20%20%20%20%20%20var%20title%20=%20document.title%20||%20url;%20%20%20%20%20%20window.open('${origin}/links/create?url='%20+%20encodeURIComponent(url)+'&title='%20+%20encodeURIComponent(title),'_blank','height=600,width=800');})();`
-      console.log(bookmark)
+      if (process.client) {
+        const origin = window.location.origin
+        const bookmark = `javascript:(function(){var%20url%20=%20location.href;%20%20%20%20%20%20var%20title%20=%20document.title%20||%20url;%20%20%20%20%20%20window.open('${origin}/links/create?url='%20+%20encodeURIComponent(url)+'&title='%20+%20encodeURIComponent(title),'_blank','height=600,width=800');})();`
+        console.log(bookmark)
 
-      navigator.permissions.query({ name: 'clipboard-write' }).then(async result => {
-        if (result.state === 'granted' || result.state === 'prompt') {
-          try {
-            await navigator.clipboard.writeText(bookmark)
+        navigator.permissions.query({ name: 'clipboard-write' }).then(async result => {
+          if (result.state === 'granted' || result.state === 'prompt') {
+            try {
+              await navigator.clipboard.writeText(bookmark)
 
-            this.$buefy.toast.open({
-              message: 'Bookmark copied!',
-              type: 'is-success'
-            })
-          } catch (error) {
-            this.$buefy.toast.open({
-              message: 'An error occurred.',
-              type: 'is-danger'
-            })
+              this.$buefy.toast.open({
+                message: 'Bookmark copied!',
+                type: 'is-success'
+              })
+            } catch (error) {
+              this.$buefy.toast.open({
+                message: 'An error occurred.',
+                type: 'is-danger'
+              })
+            }
           }
-        }
-      })
+        })
+      }
     }
   },
 
