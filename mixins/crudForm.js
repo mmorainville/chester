@@ -21,11 +21,11 @@ export default {
       this.isFetching = true
 
       try {
-        await this.$axios({
-          method: this.isCreating ? 'post' : 'put',
-          url: `${baseUrl}${this.isCreating ? '' : `/${this.itemToCreateOrEdit.id}`}`,
-          data: item
-        })
+        if (this.isCreating) {
+          await this.$axios.post(baseUrl, item)
+        } else {
+          await this.$axios.put(`${baseUrl}/${this.itemToCreateOrEdit.id}`, item)
+        }
 
         this.$buefy.snackbar.open(successMessage)
 
