@@ -36,7 +36,8 @@ module.exports = {
   // Before creating a value.
   // Fired before an `insert` query.
   beforeCreate: async (model, attrs, options) => {
-    if (model.attributes.url) {
+    console.log(model);
+    if (model.attributes && model.attributes.url) {
       try {
         let buffer = await captureWebsite.base64(
           model.attributes.url,
