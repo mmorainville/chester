@@ -36,11 +36,11 @@ module.exports = {
   // Before creating a value.
   // Fired before an `insert` query.
   beforeCreate: async (model, attrs, options) => {
-    console.log(model);
-    if (model.attributes && model.attributes.url) {
+    const attributes = model.attributes ? model.attributes : model;
+    if (attributes.url) {
       try {
         let buffer = await captureWebsite.base64(
-          model.attributes.url,
+          attributes.url,
           {
             width: 1600,
             height: 1200,
@@ -48,7 +48,7 @@ module.exports = {
           });
 
         let base64 = buffer.toString('base64');
-        model.attributes.screenshot = `data:image/png;base64,${base64}`;
+        attributes.screenshot = `data:image/png;base64,${base64}`;
       } catch (e) {
         console.log(e);
       }
