@@ -54,7 +54,17 @@
                         input.input(type="text" placeholder="Filename..." v-model="viewing.filename")
 
                     b-field(label='Cities')
-                      b-taginput(v-model='viewing.cities' placeholder='Cities...')
+                      b-taginput(
+                        v-model='viewing.cities'
+                        placeholder='Cities...'
+                        :on-paste-separators="[]"
+
+                        :data="filteredData['places']"
+                        autocomplete
+                        :allow-new="true"
+                        icon="label"
+                        @typing="text => getFilteredData(text, 'places')"
+                      )
 
                     b-field(label='Dates')
                       b-datepicker(
@@ -68,7 +78,16 @@
                       b-taginput(v-model='viewing.dates' placeholder='Dates...')
 
                     b-field(label='Spectators')
-                      b-taginput(v-model='viewing.spectators' placeholder='Spectators...')
+                      b-taginput(
+                        v-model='viewing.spectators'
+                        placeholder='Spectators...'
+
+                        :data="filteredData['persons']"
+                        autocomplete
+                        :allow-new="true"
+                        icon="label"
+                        @typing="text => getFilteredData(text, 'persons')"
+                      )
 
                     b-checkbox(v-model='viewing.firstTime') First time
                     b-checkbox(v-model='viewing.dateValidity') Date validity
@@ -129,7 +148,30 @@ export default {
 
       activeViewing: 0,
 
-      remoteMovies: []
+      remoteMovies: [],
+
+      autocompleteData: {
+        places: [],
+        persons: []
+      },
+      filteredData: {
+        places: [],
+        persons: []
+      }
+    }
+  },
+
+  async mounted () {
+    try {
+      const places = await this.$axios.$get('places')
+      const persons = await this.$axios.$get('people')
+
+      this.autocompleteData.places = places.map(place => `${place.street}, ${place.city}`)
+      this.autocompleteData.persons = persons.map(person => `${person.nickname}`)
+
+      this.filteredData = cloneDeep(this.autocompleteData)
+    } catch (error) {
+      console.log(error)
     }
   },
 
@@ -195,6 +237,15 @@ export default {
 
     onSelectDate (date, viewing) {
       viewing.dates.push(dayjs(date).format('YYYY-MM-DD'))
+    },
+
+    getFilteredData (text, type) {
+      this.filteredData[type] = this.autocompleteData[type].filter((option) => {
+        return option
+          .toString()
+          .toLowerCase()
+          .indexOf(text.toLowerCase()) >= 0
+      })
     }
   }
 }
