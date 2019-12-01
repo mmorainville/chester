@@ -1,0 +1,36 @@
+{
+  "connection": "default",
+  "collectionName": "books",
+  "info": {
+    "name": "book",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "title": {
+      "required": true,
+      "type": "string"
+    },
+    "authors": {
+      "type": "json"
+    },
+    "year": {
+      "type": "integer"
+    },
+    "pageNumber": {
+      "type": "integer"
+    },
+    "readings": {
+      "group": "reading",
+      "repeatable": true,
+      "type": "group"
+    },
+    "cover": {
+      "type": "string"
+    }
+  }
+}

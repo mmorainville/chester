@@ -15,6 +15,12 @@
             template(#actions)
               div.buttons
                 nuxt-link.button.is-primary.is-small.is-rounded(:to="{name: 'movies'}") View
+
+        .column.is-one-third
+          app-card(title="Books" url="/books")
+            template(#actions)
+              div.buttons
+                nuxt-link.button.is-primary.is-small.is-rounded(:to="{name: 'books'}") View
 </template>
 
 <script>

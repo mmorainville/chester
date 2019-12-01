@@ -26,7 +26,7 @@
 
 <script>
 import AppCard from '~/components/AppCard'
-import LinkForm from '~/components/movies/LinkForm'
+import LinkForm from '~/components/links/LinkForm'
 import crudMixin from '~/mixins/crud'
 import exportMixin from '~/mixins/export'
 

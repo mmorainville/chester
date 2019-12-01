@@ -1,16 +1,16 @@
 <template lang="pug">
-  LinkForm
+  BookForm
 </template>
 
 <script>
-import LinkForm from '~/components/links/LinkForm'
+import BookForm from '~/components/books/BookForm'
 
 export default {
-  name: 'LinksCreate',
+  name: 'BooksCreate',
   middleware: 'auth',
 
   components: {
-    LinkForm
+    BookForm
   }
 }
 </script>

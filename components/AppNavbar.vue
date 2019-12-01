@@ -15,6 +15,7 @@
             .navbar-dropdown
               nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'links-create'}") Link
               nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'movies-create'}") Movie
+              nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'books-create'}") Book
         .navbar-end
           .navbar-item(v-if="$auth.loggedIn && $auth.user.username")
             | Hello, {{ $auth.user.username }}
@@ -53,6 +54,10 @@ export default {
         {
           title: 'Movies',
           to: { name: 'movies' }
+        },
+        {
+          title: 'Books',
+          to: { name: 'books' }
         }
       ]
     }

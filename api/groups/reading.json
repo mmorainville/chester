@@ -1,0 +1,25 @@
+{
+  "info": {
+    "name": "reading",
+    "description": ""
+  },
+  "connection": "default",
+  "collectionName": "groups_readings",
+  "attributes": {
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "places": {
+      "type": "json"
+    },
+    "firstTime": {
+      "type": "boolean"
+    },
+    "dateValidity": {
+      "type": "boolean"
+    }
+  }
+}
