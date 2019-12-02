@@ -66,14 +66,16 @@
 
                     b-field(label='Dates')
                       b-datepicker(
-                        ref="datepicker"
-                        placeholder="Date..."
-                        @input="(date) => onSelectDate(date, reading)"
+                        v-model="reading.startDate"
+                        placeholder="Start date..."
                         icon="calendar-today"
                       )
 
-                    b-field
-                      b-taginput(v-model='reading.dates' placeholder='Dates...')
+                    b-datepicker(
+                      v-model="reading.endDate"
+                      placeholder="End date..."
+                      icon="calendar-today"
+                    )
 
                     b-checkbox(v-model='reading.firstTime') First time
                     b-checkbox(v-model='reading.dateValidity') Date validity
@@ -95,6 +97,14 @@ import debounce from 'lodash.debounce'
 import dayjs from 'dayjs'
 import crudFormMixin from '~/mixins/crudForm'
 
+const defaultReading = {
+  places: [],
+  startDate: new Date(),
+  endDate: '2019-12-02T17:44:00:000Z',
+  firstTime: true,
+  dateValidity: true
+}
+
 export default {
   name: 'BookForm',
   middleware: 'auth',
@@ -114,12 +124,7 @@ export default {
           pageNumber: 0,
           isbn: '',
           readings: [
-            {
-              places: [],
-              dates: [],
-              firstTime: true,
-              dateValidity: true
-            }
+            defaultReading
           ]
         }
       }
@@ -167,10 +172,10 @@ export default {
     },
 
     getAsyncRemoteBooksWithDebounce: debounce(function(title) {
-      this.getAsyncRemoteMovies(title)
+      this.getAsyncRemoteBooks(title)
     }, 250),
 
-    async getAsyncRemoteMovies (title) {
+    async getAsyncRemoteBooks (title) {
       if (!title.length) {
         this.remoteBooks = []
         return
@@ -185,7 +190,7 @@ export default {
         results.forEach((item) => this.remoteBooks.push(item))
       } catch (error) {
         this.remoteBooks = []
-        throw error
+        console.log(error)
       }
 
       this.isFetching = false
@@ -203,13 +208,7 @@ export default {
     },
 
     addReading () {
-      this.bookToCreateOrEdit.readings.push({
-        places: [],
-        dates: [],
-        spectators: [],
-        firstTime: true,
-        dateValidity: true
-      })
+      this.bookToCreateOrEdit.readings.push(cloneDeep(defaultReading))
 
       this.activeReading = this.bookToCreateOrEdit.readings.length - 1
     },

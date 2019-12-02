@@ -15,8 +15,8 @@
             :image="getThumbnail(book)",
             :date="book.created_at",
             :title="book.title",
-            @app-card:on-delete="deleteMovie(book.id)"
-            @app-card:on-edit="editMovie(book)"
+            @app-card:on-delete="deleteBook(book.id)"
+            @app-card:on-edit="editBook(book)"
           )
 </template>
 
