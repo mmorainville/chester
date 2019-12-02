@@ -540,12 +540,6 @@
                 "id": {
                   "type": "string"
                 },
-                "startDate": {
-                  "type": "string"
-                },
-                "endDate": {
-                  "type": "string"
-                },
                 "places": {
                   "type": "object"
                 },
@@ -554,6 +548,12 @@
                 },
                 "dateValidity": {
                   "type": "boolean"
+                },
+                "startDate": {
+                  "type": "string"
+                },
+                "endDate": {
+                  "type": "string"
                 }
               }
             }
@@ -594,12 +594,6 @@
                 "id": {
                   "type": "string"
                 },
-                "startDate": {
-                  "type": "string"
-                },
-                "endDate": {
-                  "type": "string"
-                },
                 "places": {
                   "type": "object"
                 },
@@ -608,6 +602,12 @@
                 },
                 "dateValidity": {
                   "type": "boolean"
+                },
+                "startDate": {
+                  "type": "string"
+                },
+                "endDate": {
+                  "type": "string"
                 }
               }
             }

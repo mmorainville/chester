@@ -64,18 +64,22 @@
                         @typing="text => getFilteredData(text, 'places')"
                       )
 
-                    b-field(label='Dates')
-                      b-datepicker(
-                        v-model="reading.startDate"
-                        placeholder="Start date..."
-                        icon="calendar-today"
-                      )
+                    client-only
+                      b-field(label='Dates')
+                        b-datepicker(
+                          :value="getDateAsDate(reading, 'startDate')"
+                          @input="(date) => onSelectDate(date, reading, 'startDate')"
+                          placeholder="Start date..."
+                          icon="calendar-today"
+                        )
 
-                    b-datepicker(
-                      v-model="reading.endDate"
-                      placeholder="End date..."
-                      icon="calendar-today"
-                    )
+                      b-field
+                        b-datepicker(
+                          :value="getDateAsDate(reading, 'endDate')"
+                          @input="(date) => onSelectDate(date, reading, 'endDate')"
+                          placeholder="End date..."
+                          icon="calendar-today"
+                        )
 
                     b-checkbox(v-model='reading.firstTime') First time
                     b-checkbox(v-model='reading.dateValidity') Date validity
@@ -99,8 +103,8 @@ import crudFormMixin from '~/mixins/crudForm'
 
 const defaultReading = {
   places: [],
-  startDate: new Date(),
-  endDate: '2019-12-02T17:44:00:000Z',
+  startDate: dayjs().format('YYYY-MM-DD'),
+  endDate: dayjs().format('YYYY-MM-DD'),
   firstTime: true,
   dateValidity: true
 }
@@ -217,8 +221,12 @@ export default {
       this.bookToCreateOrEdit.readings.splice(index, 1)
     },
 
-    onSelectDate (date, reading) {
-      reading.dates.push(dayjs(date).format('YYYY-MM-DD'))
+    onSelectDate (date, reading, property) {
+      reading[property] = dayjs(date).format('YYYY-MM-DD')
+    },
+
+    getDateAsDate (reading, property) {
+      return new Date(Date.parse(dayjs(reading[property]).format()))
     },
 
     getFilteredData (text, type) {

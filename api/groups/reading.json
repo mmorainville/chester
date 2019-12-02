@@ -6,12 +6,6 @@
   "connection": "default",
   "collectionName": "groups_readings",
   "attributes": {
-    "startDate": {
-      "type": "date"
-    },
-    "endDate": {
-      "type": "date"
-    },
     "places": {
       "type": "json"
     },
@@ -20,6 +14,12 @@
     },
     "dateValidity": {
       "type": "boolean"
+    },
+    "startDate": {
+      "type": "string"
+    },
+    "endDate": {
+      "type": "string"
     }
   }
 }
