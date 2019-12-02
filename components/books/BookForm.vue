@@ -12,12 +12,12 @@
             b-field(label="Titre")
               b-autocomplete(
                 v-model="bookToCreateOrEdit.title"
-                :data="remoteMovies"
-                placeholder="Search movies..."
+                :data="remoteBooks"
+                placeholder="Search books..."
                 field="title"
                 :loading="isFetching"
-                @typing="getAsyncRemoteMoviesWithDebounce"
-                @select="onMovieSelect"
+                @typing="getAsyncRemoteBooksWithDebounce"
+                @select="onBookSelect"
               )
                 template(slot-scope='props')
                   .media
@@ -31,8 +31,14 @@
               .control
                 input.input(type="number" placeholder="Year" v-model="bookToCreateOrEdit.year")
 
-            b-field(label='Directors')
-              b-taginput(v-model='bookToCreateOrEdit.directors' placeholder='Directors...')
+            b-field(label='ISBN')
+              b-input(v-model='bookToCreateOrEdit.isbn' placeholder='ISBN...')
+
+            b-field(label='Page number')
+              b-input(v-model='bookToCreateOrEdit.pageNumber' type="number" placeholder='Page number...')
+
+            b-field(label='Authors')
+              b-taginput(v-model='bookToCreateOrEdit.authors' placeholder='Authors...')
 
             .field
               b-collapse.card(v-for="(reading, index) in bookToCreateOrEdit.readings" :key="index" :open="activeReading === index" @open="activeReading = index")
@@ -45,10 +51,10 @@
                     b-icon(icon="delete-forever")
                 .card-content
                   .content
-                    b-field(label='Cities')
+                    b-field(label='Places')
                       b-taginput(
-                        v-model='reading.cities'
-                        placeholder='Cities...'
+                        v-model='reading.places'
+                        placeholder='Places...'
                         :on-paste-separators="[]"
 
                         :data="filteredData['places']"
@@ -68,18 +74,6 @@
 
                     b-field
                       b-taginput(v-model='reading.dates' placeholder='Dates...')
-
-                    b-field(label='Spectators')
-                      b-taginput(
-                        v-model='reading.spectators'
-                        placeholder='Spectators...'
-
-                        :data="filteredData['persons']"
-                        autocomplete
-                        :allow-new="true"
-                        icon="label"
-                        @typing="text => getFilteredData(text, 'persons')"
-                      )
 
                     b-checkbox(v-model='reading.firstTime') First time
                     b-checkbox(v-model='reading.dateValidity') Date validity
@@ -102,26 +96,27 @@ import dayjs from 'dayjs'
 import crudFormMixin from '~/mixins/crudForm'
 
 export default {
-  name: 'MovieForm',
+  name: 'BookForm',
   middleware: 'auth',
 
   mixins: [crudFormMixin],
 
   props: {
-    movie: {
+    book: {
       type: Object,
       required: false,
       default () {
         return {
           title: '',
           year: null,
-          poster: '',
-          directors: [],
+          cover: '',
+          authors: [],
+          pageNumber: 0,
+          isbn: '',
           readings: [
             {
-              cities: [],
+              places: [],
               dates: [],
-              spectators: [],
               firstTime: true,
               dateValidity: true
             }
@@ -133,12 +128,12 @@ export default {
 
   data () {
     return {
-      itemToCreateOrEdit: cloneDeep(this.movie),
-      bookToCreateOrEdit: cloneDeep(this.movie),
+      itemToCreateOrEdit: cloneDeep(this.book),
+      bookToCreateOrEdit: cloneDeep(this.book),
 
       activeReading: 0,
 
-      remoteMovies: [],
+      remoteBooks: [],
 
       autocompleteData: {
         places: [],
@@ -168,48 +163,48 @@ export default {
   methods: {
     async createOrEditBook () {
       const bookToCreateOrEdit = this.bookToCreateOrEdit
-      this.createOrEdit('movies', bookToCreateOrEdit, `Movie successfully ${this.isCreating ? 'created' : 'edited'}!`)
+      this.createOrEdit('books', bookToCreateOrEdit, `Book successfully ${this.isCreating ? 'created' : 'edited'}!`)
     },
 
-    getAsyncRemoteMoviesWithDebounce: debounce(function(title) {
+    getAsyncRemoteBooksWithDebounce: debounce(function(title) {
       this.getAsyncRemoteMovies(title)
     }, 250),
 
     async getAsyncRemoteMovies (title) {
       if (!title.length) {
-        this.remoteMovies = []
+        this.remoteBooks = []
         return
       }
 
       this.isFetching = true
 
       try {
-        let { results } = await this.$axios.$get(`${process.env.TMDB_API_URL}/search/movie?api_key=${process.env.TMDB_API_KEY}&language=fr&query=${title}`)
+        let { results } = await this.$axios.$get(`${process.env.TMDB_API_URL}/search/book?api_key=${process.env.TMDB_API_KEY}&language=fr&query=${title}`)
 
-        this.remoteMovies = []
-        results.forEach((item) => this.remoteMovies.push(item))
+        this.remoteBooks = []
+        results.forEach((item) => this.remoteBooks.push(item))
       } catch (error) {
-        this.remoteMovies = []
+        this.remoteBooks = []
         throw error
       }
 
       this.isFetching = false
     },
 
-    async onMovieSelect (option) {
+    async onBookSelect (option) {
       if (option) {
         this.bookToCreateOrEdit.title = option.title
         this.bookToCreateOrEdit.year = option.release_date ? option.release_date.split('-')[0] : null
         this.bookToCreateOrEdit.poster = option.poster_path
 
-        let credits = await this.$axios.$get(`${process.env.TMDB_API_URL}/movie/${option.id}/credits?api_key=${process.env.TMDB_API_KEY}`)
-        this.bookToCreateOrEdit.directors = credits.crew.filter(person => person.job === 'Director').map(person => person.name)
+        let credits = await this.$axios.$get(`${process.env.TMDB_API_URL}/book/${option.id}/credits?api_key=${process.env.TMDB_API_KEY}`)
+        this.bookToCreateOrEdit.authors = credits.crew.filter(person => person.job === 'Director').map(person => person.name)
       }
     },
 
     addReading () {
       this.bookToCreateOrEdit.readings.push({
-        cities: [],
+        places: [],
         dates: [],
         spectators: [],
         firstTime: true,

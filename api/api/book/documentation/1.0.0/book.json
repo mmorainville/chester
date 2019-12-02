@@ -560,6 +560,9 @@
           },
           "cover": {
             "type": "string"
+          },
+          "isbn": {
+            "type": "string"
           }
         }
       },
@@ -610,6 +613,9 @@
             }
           },
           "cover": {
+            "type": "string"
+          },
+          "isbn": {
             "type": "string"
           }
         }

@@ -7,7 +7,10 @@
   },
   "options": {
     "increments": true,
-    "timestamps": true,
+    "timestamps": [
+      "created_at",
+      "updated_at"
+    ],
     "comment": ""
   },
   "attributes": {
@@ -30,6 +33,9 @@
       "type": "group"
     },
     "cover": {
+      "type": "string"
+    },
+    "isbn": {
       "type": "string"
     }
   }
