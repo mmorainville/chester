@@ -2,8 +2,10 @@
 export default {
   mode: 'universal',
   env: {
+    GOOGLE_BOOKS_API_URL: process.env.GOOGLE_BOOKS_API_URL || 'https://www.googleapis.com/books/v1',
+    GOOGLE_BOOKS_API_KEY: process.env.GOOGLE_BOOKS_API_KEY,
     TMDB_API_URL: process.env.TMDB_API_URL || 'https://api.themoviedb.org/3',
-    TMDB_API_KEY: process.env.TMDB_API_KEY,
+    TMDB_API_KEY: process.env.TMDB_API_KEY
   },
   /*
   ** Headers of the page

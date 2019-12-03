@@ -193,10 +193,14 @@ export default {
       this.isFetching = true
 
       try {
-        let { results } = await this.$axios.$get(`${process.env.TMDB_API_URL}/search/book?api_key=${process.env.TMDB_API_KEY}&language=fr&query=${title}`)
+        // TODO: set correct language
+        // https://www.googleapis.com/books/v1/volumes?q=Dune
+        let { results } = await this.$axios.$get(`${process.env.GOOGLE_BOOKS_API_URL}/volumes?key=${process.env.GOOGLE_BOOKS_API_KEY}&q=${title}`)
 
-        this.remoteBooks = []
-        results.forEach((item) => this.remoteBooks.push(item))
+        console.log(results)
+
+        // this.remoteBooks = []
+        // results.forEach((item) => this.remoteBooks.push(item))
       } catch (error) {
         this.remoteBooks = []
         console.log(error)
