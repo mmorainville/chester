@@ -64,22 +64,27 @@
                         @typing="text => getFilteredData(text, 'places')"
                       )
 
-                    client-only
-                      b-field(label='Dates')
-                        b-datepicker(
-                          :value="getDateAsDate(reading, 'startDate')"
-                          @input="(date) => onSelectDate(date, reading, 'startDate')"
-                          placeholder="Start date..."
-                          icon="calendar-today"
-                        )
+                    b-field(label="Dates")
+                      .columns.is-multiline
+                        .column.is-full
+                          b-field
+                            b-datepicker(
+                              @input="(date) => onSelectDate(date, reading, 'startDate')"
+                              placeholder="Start date..."
+                              icon="calendar-today"
+                            )
+                          b-field
+                            b-input(v-model='reading.startDate' placeholder='Start date...')
 
-                      b-field
-                        b-datepicker(
-                          :value="getDateAsDate(reading, 'endDate')"
-                          @input="(date) => onSelectDate(date, reading, 'endDate')"
-                          placeholder="End date..."
-                          icon="calendar-today"
-                        )
+                        .column.is-full
+                          b-field
+                            b-datepicker(
+                              @input="(date) => onSelectDate(date, reading, 'endDate')"
+                              placeholder="End date..."
+                              icon="calendar-today"
+                            )
+                          b-field
+                            b-input(v-model='reading.endDate' placeholder='End date...')
 
                     b-checkbox(v-model='reading.firstTime') First time
                     b-checkbox(v-model='reading.dateValidity') Date validity
@@ -103,8 +108,8 @@ import crudFormMixin from '~/mixins/crudForm'
 
 const defaultReading = {
   places: [],
-  startDate: dayjs().format('YYYY-MM-DD'),
-  endDate: dayjs().format('YYYY-MM-DD'),
+  startDate: '',
+  endDate: '',
   firstTime: true,
   dateValidity: true
 }
@@ -223,10 +228,6 @@ export default {
 
     onSelectDate (date, reading, property) {
       reading[property] = dayjs(date).format('YYYY-MM-DD')
-    },
-
-    getDateAsDate (reading, property) {
-      return new Date(Date.parse(dayjs(reading[property]).format()))
     },
 
     getFilteredData (text, type) {
