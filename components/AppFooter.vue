@@ -1,5 +1,5 @@
 <template lang="pug">
-  footer.footer.tw-bg-transparent
+  footer.footer
     .container
       .level
         .level-left

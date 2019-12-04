@@ -14,7 +14,7 @@
                 v-model="bookToCreateOrEdit.title"
                 :data="remoteBooks"
                 placeholder="Search books..."
-                field="title"
+                field="volumeInfo.title"
                 :loading="isFetching"
                 @typing="getAsyncRemoteBooksWithDebounce"
                 @select="onBookSelect"
@@ -25,7 +25,7 @@
                       // img(width="48" :src="`https://image.tmdb.org/t/p/w500/${props.option.poster_path}`")
                     .media-content
                       h1.title.is-5 {{ props.option.volumeInfo.title }}
-                      h2.subtitle.is-6 {{ props.option.release_date ? props.option.release_date.split('-')[0] : '-' }}
+                      h2.subtitle.is-6 {{ props.option.volumeInfo.publishedDate }}
 
             .field
               .control
@@ -202,8 +202,6 @@ export default {
           }]
         })
 
-        console.log(items)
-
         this.remoteBooks = []
         items.forEach((item) => this.remoteBooks.push(item))
       } catch (error) {
@@ -214,12 +212,14 @@ export default {
       this.isFetching = false
     },
 
-    async onBookSelect (option) {
+    onBookSelect (option) {
+      console.log(option)
       if (option) {
+        console.log(option.volumeInfo)
         this.bookToCreateOrEdit.title = option.volumeInfo.title
-        this.bookToCreateOrEdit.year = option.publishedDate
-        this.bookToCreateOrEdit.poster = option.poster_path // TODO: change
-        this.bookToCreateOrEdit.pageNumber = option.pageCount
+        this.bookToCreateOrEdit.year = option.volumeInfo.publishedDate
+        // this.bookToCreateOrEdit.poster = option.poster_path // TODO: change
+        this.bookToCreateOrEdit.pageNumber = option.volumeInfo.pageCount
 
         this.bookToCreateOrEdit.authors = option.volumeInfo.authors
       }

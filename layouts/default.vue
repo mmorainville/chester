@@ -1,7 +1,7 @@
 <template lang="pug">
-  .app-content.tw-min-h-screen.tw-bg-gray-100
+  .app-content.has-navbar-fixed-top.tw-min-h-screen.tw-bg-gray-100
 
-    app-navbar.tw-bg-transparent
+    app-navbar.is-fixed-top.is-light.tw-shadow-md
 
     b-loading(:active.sync="isLoading")
 
@@ -32,3 +32,10 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+  $navbar-height: 3.25rem !default
+
+  .has-navbar-fixed-top
+    padding-top: $navbar-height
+</style>
