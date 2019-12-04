@@ -44,6 +44,10 @@ BASE_URL: https://pulsar-chester-staging.herokuapp.com/
 HOST: 0.0.0.0
 NODE_ENV: production
 NPM_CONFIG_PRODUCTION: false
+GOOGLE_BOOKS_API_URL=https://www.googleapis.com/books/v1
+GOOGLE_BOOKS_API_KEY=<google_books_api_key>
+TMDB_API_URL=https://api.themoviedb.org/3
+TMDB_API_KEY=<tmdb_api_key>
 ```
 
 ## Bookmarklet
