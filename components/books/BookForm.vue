@@ -24,10 +24,10 @@
                     .media-left
                       img(v-if="props.option.volumeInfo.imageLinks" width="48" :src="props.option.volumeInfo.imageLinks.thumbnail")
                     .media-content
-                      h1.title.is-5 {{ props.option.volumeInfo.title }}
-                      h2.subtitle.is-6 {{ props.option.volumeInfo.publishedDate }}
-                        template(v-if="props.option.volumeInfo.publisher") - {{ props.option.volumeInfo.publisher }}
-                        template(v-if="getIsbn(props.option.volumeInfo.industryIdentifiers)") - {{ getIsbn(props.option.volumeInfo.industryIdentifiers) }}
+                      h1.is-size-5 {{ props.option.volumeInfo.title }}
+                      h2.is-size-6 {{ props.option.volumeInfo.publishedDate | date('YYYY') }} #[template(v-if="props.option.volumeInfo.publisher") · {{ props.option.volumeInfo.publisher }}]
+                      p(v-if="getIsbn(props.option.volumeInfo.industryIdentifiers)")
+                        small {{ getIsbn(props.option.volumeInfo.industryIdentifiers) }}
 
             .field
               .control
@@ -216,14 +216,14 @@ export default {
 
     onBookSelect (option) {
       console.log(option)
-      if (option) {
+      if (option && option.volumeInfo) {
         console.log(option.volumeInfo)
         this.bookToCreateOrEdit.title = option.volumeInfo.title
-        this.bookToCreateOrEdit.year = option.volumeInfo.publishedDate ? option.volumeInfo.publishedDate.split('-')[0] : ''
+        this.bookToCreateOrEdit.year = this.$options.filters.date(option.volumeInfo.publishedDate, 'YYYY')
         this.bookToCreateOrEdit.cover = option.volumeInfo.imageLinks ? option.volumeInfo.imageLinks.thumbnail : ''
         this.bookToCreateOrEdit.pageNumber = option.volumeInfo.pageCount
         this.bookToCreateOrEdit.isbn = this.getIsbn(option.volumeInfo.industryIdentifiers)
-        // this.bookToCreateOrEdit.publisher = this.getIsbn(option.volumeInfo.publisher)
+        // this.bookToCreateOrEdit.publisher = option.volumeInfo.publisher
 
         this.bookToCreateOrEdit.authors = option.volumeInfo.authors
       }
