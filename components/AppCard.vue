@@ -2,7 +2,7 @@
   div(class="card tw-rounded tw-border-none tw-shadow-lg hover:tw-shadow-2xl" style="height: 100%")
     .card-image(v-if="image")
       a(:href="url")
-        img(:src="image", alt="", onerror="this.src='https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2'")
+        img.tw-w-full(:src="image" alt="" onerror="this.src='https://bulma.dev/placeholder/pictures/bg_4-3.svg?primary=00d1b2'")
 
     .card-content
       span.is-size-7(v-if="date") {{ date | date('YYYY/MM/DD') }}

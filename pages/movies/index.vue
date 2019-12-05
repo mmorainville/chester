@@ -10,7 +10,7 @@
             button.button(@click="$root.$emit('app-navbar:on-export')") Export
 
       .columns.is-multiline
-        .column.is-one-quarter(v-for="(movie, index) in movies", :key="index")
+        .column.is-one-fifth(v-for="(movie, index) in movies", :key="index")
           app-card(
             :image="getThumbnail(movie)",
             :date="movie.created_at",

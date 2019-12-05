@@ -10,7 +10,7 @@
             button.button(@click="$root.$emit('app-navbar:on-export')") Export
 
       .columns.is-multiline
-        .column.is-one-quarter(v-for="(book, index) in books", :key="index")
+        .column.is-one-fifth(v-for="(book, index) in books", :key="index")
           app-card(
             :image="getThumbnail(book)",
             :date="book.created_at",

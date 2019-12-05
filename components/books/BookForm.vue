@@ -5,7 +5,7 @@
 
       .columns.is-centered
         .column.is-3
-          img(v-if="bookToCreateOrEdit.cover" :src="bookToCreateOrEdit.cover")
+          img.tw-w-full(v-if="bookToCreateOrEdit.cover" :src="bookToCreateOrEdit.cover")
 
         .column.is-6
           form(@submit.prevent="createOrEditBook")
@@ -24,23 +24,28 @@
                     .media-left
                       img(v-if="props.option.volumeInfo.imageLinks" width="48" :src="props.option.volumeInfo.imageLinks.thumbnail")
                     .media-content
-                      h1.is-size-5 {{ props.option.volumeInfo.title }}
+                      h1.is-size-5.has-text-weight-bold {{ props.option.volumeInfo.title }} #[small.has-text-weight-normal(v-if="props.option.volumeInfo.authors") · {{ props.option.volumeInfo.authors.join(', ') }}]
                       h2.is-size-6 {{ props.option.volumeInfo.publishedDate | date('YYYY') }} #[template(v-if="props.option.volumeInfo.publisher") · {{ props.option.volumeInfo.publisher }}]
                       p(v-if="getIsbn(props.option.volumeInfo.industryIdentifiers)")
                         small {{ getIsbn(props.option.volumeInfo.industryIdentifiers) }}
 
-            .field
-              .control
-                input.input(type="number" placeholder="Year" v-model="bookToCreateOrEdit.year")
+            b-field(label='Year')
+              b-input(v-model='bookToCreateOrEdit.year' placeholder='Year...')
 
             b-field(label='ISBN')
               b-input(v-model='bookToCreateOrEdit.isbn' placeholder='ISBN...')
 
+            b-field(label='Publisher')
+              b-input(v-model='bookToCreateOrEdit.publisher' placeholder='Publisher...')
+
             b-field(label='Page number')
-              b-input(v-model='bookToCreateOrEdit.pageNumber' type="number" placeholder='Page number...')
+              b-input(v-model='bookToCreateOrEdit.pageCount' type="number" placeholder='Page number...')
 
             b-field(label='Authors')
               b-taginput(v-model='bookToCreateOrEdit.authors' placeholder='Authors...')
+
+            b-field(label='Cover')
+              b-input(v-model='bookToCreateOrEdit.cover' placeholder='Cover...')
 
             .field
               b-collapse.card(v-for="(reading, index) in bookToCreateOrEdit.readings" :key="index" :open="activeReading === index" @open="activeReading = index")
@@ -129,11 +134,12 @@ export default {
       default () {
         return {
           title: '',
-          year: null,
+          year: '',
           cover: '',
           authors: [],
-          pageNumber: 0,
+          pageCount: 0,
           isbn: '',
+          publisher: '',
           readings: [
             defaultReading
           ]
@@ -215,15 +221,13 @@ export default {
     },
 
     onBookSelect (option) {
-      console.log(option)
       if (option && option.volumeInfo) {
-        console.log(option.volumeInfo)
         this.bookToCreateOrEdit.title = option.volumeInfo.title
         this.bookToCreateOrEdit.year = this.$options.filters.date(option.volumeInfo.publishedDate, 'YYYY')
         this.bookToCreateOrEdit.cover = option.volumeInfo.imageLinks ? option.volumeInfo.imageLinks.thumbnail : ''
-        this.bookToCreateOrEdit.pageNumber = option.volumeInfo.pageCount
+        this.bookToCreateOrEdit.pageCount = option.volumeInfo.pageCount
         this.bookToCreateOrEdit.isbn = this.getIsbn(option.volumeInfo.industryIdentifiers)
-        // this.bookToCreateOrEdit.publisher = option.volumeInfo.publisher
+        this.bookToCreateOrEdit.publisher = option.volumeInfo.publisher
 
         this.bookToCreateOrEdit.authors = option.volumeInfo.authors
       }

@@ -523,10 +523,7 @@
           "authors": {
             "type": "object"
           },
-          "year": {
-            "type": "integer"
-          },
-          "pageNumber": {
+          "pageCount": {
             "type": "integer"
           },
           "readings": {
@@ -562,6 +559,12 @@
             "type": "string"
           },
           "isbn": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "year": {
             "type": "string"
           }
         }
@@ -577,10 +580,7 @@
           "authors": {
             "type": "object"
           },
-          "year": {
-            "type": "integer"
-          },
-          "pageNumber": {
+          "pageCount": {
             "type": "integer"
           },
           "readings": {
@@ -616,6 +616,12 @@
             "type": "string"
           },
           "isbn": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "year": {
             "type": "string"
           }
         }
