@@ -5,7 +5,7 @@
 
       .columns.is-centered
         .column.is-3
-          img(v-if="bookToCreateOrEdit.poster" :src="bookToCreateOrEdit.poster")
+          img(v-if="bookToCreateOrEdit.cover" :src="bookToCreateOrEdit.cover")
 
         .column.is-6
           form(@submit.prevent="createOrEditBook")
@@ -21,11 +21,13 @@
               )
                 template(slot-scope='props')
                   .media
-                    // .media-left
-                      // img(width="48" :src="`https://image.tmdb.org/t/p/w500/${props.option.poster_path}`")
+                    .media-left
+                      img(v-if="props.option.volumeInfo.imageLinks" width="48" :src="props.option.volumeInfo.imageLinks.thumbnail")
                     .media-content
                       h1.title.is-5 {{ props.option.volumeInfo.title }}
                       h2.subtitle.is-6 {{ props.option.volumeInfo.publishedDate }}
+                        template(v-if="props.option.volumeInfo.publisher") - {{ props.option.volumeInfo.publisher }}
+                        template(v-if="getIsbn(props.option.volumeInfo.industryIdentifiers)") - {{ getIsbn(props.option.volumeInfo.industryIdentifiers) }}
 
             .field
               .control
@@ -217,9 +219,11 @@ export default {
       if (option) {
         console.log(option.volumeInfo)
         this.bookToCreateOrEdit.title = option.volumeInfo.title
-        this.bookToCreateOrEdit.year = option.volumeInfo.publishedDate
-        // this.bookToCreateOrEdit.poster = option.poster_path // TODO: change
+        this.bookToCreateOrEdit.year = option.volumeInfo.publishedDate ? option.volumeInfo.publishedDate.split('-')[0] : ''
+        this.bookToCreateOrEdit.cover = option.volumeInfo.imageLinks ? option.volumeInfo.imageLinks.thumbnail : ''
         this.bookToCreateOrEdit.pageNumber = option.volumeInfo.pageCount
+        this.bookToCreateOrEdit.isbn = this.getIsbn(option.volumeInfo.industryIdentifiers)
+        // this.bookToCreateOrEdit.publisher = this.getIsbn(option.volumeInfo.publisher)
 
         this.bookToCreateOrEdit.authors = option.volumeInfo.authors
       }
@@ -246,6 +250,20 @@ export default {
           .toLowerCase()
           .indexOf(text.toLowerCase()) >= 0
       })
+    },
+
+    /**
+     * Return the ISBN-13 if defined, ISBN-10 otherwise.
+     * @param industryIdentifiers
+     */
+    getIsbn (industryIdentifiers) {
+      if (industryIdentifiers && industryIdentifiers.length > 0) {
+        let isbn13 = industryIdentifiers.find(identifier => identifier.type === 'ISBN_13')
+        let isbn10 = industryIdentifiers.find(identifier => identifier.type === 'ISBN_10')
+        return isbn13 ? isbn13.identifier : (isbn10 ? isbn10.identifier : '')
+      } else {
+        return ''
+      }
     }
   }
 }
