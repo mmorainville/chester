@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  api:
+    image: node:12
+    ports:
+      - 1337:1337
+    volumes:
+      - ./api:/usr/local/api
+      - /usr/local/node_modules
+    restart: always
+    working_dir: /usr/local/api
+    entrypoint: "/bin/bash"
+    command: "-c \"npm install sqlite3; npm i; npm run develop\""
+
+  client:
+    image: node:12
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/local/client
+      - /usr/local/node_modules
+    depends_on:
+      - api
+    restart: always
+    working_dir: /usr/local/client
+    entrypoint: "/bin/bash"
+    command: "-c \"npm rebuild node-sass; npm i; npm run dev\""
+    env_file: .env
+    environment:
+      - HOST=0.0.0.0
