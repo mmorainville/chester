@@ -2,7 +2,9 @@ export default function({ $axios, redirect, store }) {
   if (process.client) {
     if (localStorage.getItem('axios.baseURL')) {
       console.log('axios.baseURL', localStorage.getItem('axios.baseURL'))
-      $axios.defaults.baseURL = localStorage.getItem('axios.baseURL');
+      $axios.defaults.baseURL = localStorage.getItem('axios.baseURL')
+    } else {
+      localStorage.setItem('axios.baseURL', $axios.defaults.baseURL)
     }
   }
 

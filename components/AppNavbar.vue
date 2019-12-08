@@ -17,6 +17,10 @@
               nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'movies-create'}") Movie
               nuxt-link.navbar-item.navbar-item-dropdown(:to="{name: 'books-create'}") Book
         .navbar-end
+          .navbar-item.has-dropdown.is-hoverable
+            a.navbar-link Parameters
+            .navbar-dropdown
+              a.navbar-item.navbar-item-dropdown(@click="setBaseUrl") API endpoint
           .navbar-item(v-if="$auth.loggedIn && $auth.user.username")
             | Hello, {{ $auth.user.username }}
           .navbar-item
@@ -62,6 +66,24 @@ export default {
   watch: {
     $route () {
       this.isNavbarOpen = false
+    }
+  },
+
+  methods: {
+    setBaseUrl () {
+      this.$buefy.dialog.prompt({
+        message: 'Set a custom endpoint for the API.',
+        inputAttrs: {
+          placeholder: 'e.g. https://chester-staging.herokuapp.com/',
+          value: localStorage.getItem('axios.baseURL') ? localStorage.getItem('axios.baseURL') : this.$axios.defaults.baseURL
+        },
+        trapFocus: true,
+        onConfirm: value => {
+          localStorage.setItem('axios.baseURL', value)
+          this.$axios.defaults.baseURL = localStorage.getItem('axios.baseURL')
+          this.$buefy.toast.open(`Your name is: ${value}`)
+        }
+      })
     }
   }
 }
