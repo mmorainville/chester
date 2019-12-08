@@ -74,9 +74,9 @@ export default {
     strategies: {
       local: {
         endpoints: {
-          login: { url: `${process.env.BASE_URL || 'http://localhost:1337/'}auth/local`, method: 'post', propertyName: 'jwt' },
+          login: { url: `auth/local`, method: 'post', propertyName: 'jwt' },
           logout: false,
-          user: { url: `${process.env.BASE_URL || 'http://localhost:1337/'}users/me`, method: 'get', propertyName: false }
+          user: { url: `users/me`, method: 'get', propertyName: false }
         },
         // tokenRequired: true,
         // tokenType: 'bearer'

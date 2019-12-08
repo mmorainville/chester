@@ -1,4 +1,11 @@
 export default function({ $axios, redirect, store }) {
+  if (process.client) {
+    if (localStorage.getItem('axios.baseURL')) {
+      console.log('axios.baseURL', localStorage.getItem('axios.baseURL'))
+      $axios.defaults.baseURL = localStorage.getItem('axios.baseURL');
+    }
+  }
+
   $axios.onRequest(config => {
     console.log('onRequest', config.url)
     store.commit('app/incrementPendingRequests')
