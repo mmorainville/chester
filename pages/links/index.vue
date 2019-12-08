@@ -12,7 +12,7 @@
               button.button(@click="$root.$emit('app-navbar:on-export')") Export
 
       .columns.is-multiline
-        .column.is-one-quarter(v-for="(link, key) of links", :key="key")
+        .column.is-one-fifth(v-for="(link, key) of links", :key="key")
           app-card(
             :image="getThumbnail(link)",
             :date="link.created_at",

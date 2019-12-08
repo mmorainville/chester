@@ -4,13 +4,28 @@
       nav.level
         .level-left
           .level-item
-            h2.title.has-text-centered.tw-uppercase {{ books.length }} Books
+            h2.title.has-text-centered.tw-uppercase {{ filteredBooks.length }} Books
         .level-right
           .level-item
-            button.button(@click="$root.$emit('app-navbar:on-export')") Export
+            .buttons
+              button.button(@click="isFilterBlockOpen = !isFilterBlockOpen" aria-controls="filters") Filters
+              button.button(@click="$root.$emit('app-navbar:on-export')") Export
+
+      b-collapse(aria-id="filters" :open.sync="isFilterBlockOpen")
+        b-tabs(v-model='activeFiltersTab')
+          b-tab-item(label='Local')
+            .columns.is-multiline
+              .column.is-one-fifth
+                b-field(label="Title" label-position="on-border")
+                  b-input(v-model="filters.title")
+              .column.is-one-fifth
+                b-field(label="Readings length" label-position="on-border")
+                  b-input(v-model.number="filters.readingsLength" type="number")
+
+          b-tab-item(label='Remote' disabled)
 
       .columns.is-multiline
-        .column.is-one-fifth(v-for="(book, index) in books", :key="index")
+        .column.is-one-fifth(v-for="(book, index) in filteredBooks", :key="index")
           app-card(
             :image="getThumbnail(book)",
             :date="book.created_at",
@@ -38,7 +53,25 @@ export default {
 
   data () {
     return {
-      books: []
+      books: [],
+
+      isFilterBlockOpen: false,
+      activeFiltersTab: 0,
+      filters: {
+        title: '',
+        readingsLength: ''
+      }
+    }
+  },
+
+  computed: {
+    filteredBooks () {
+      return this.books
+        .filter(book => {
+          let regex = new RegExp(this.filters.title, 'i')
+          return !!book.title.match(regex)
+        })
+        .filter(book => this.filters.readingsLength !== '' ? book.readings.length === this.filters.readingsLength : true)
     }
   },
 

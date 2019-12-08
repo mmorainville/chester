@@ -4,13 +4,28 @@
       nav.level
         .level-left
           .level-item
-            h2.title.has-text-centered.tw-uppercase {{ movies.length }} Movies
+            h2.title.has-text-centered.tw-uppercase {{ filteredMovies.length }} Movies
         .level-right
           .level-item
-            button.button(@click="$root.$emit('app-navbar:on-export')") Export
+            .buttons
+              button.button(@click="isFilterBlockOpen = !isFilterBlockOpen" aria-controls="filters") Filters
+              button.button(@click="$root.$emit('app-navbar:on-export')") Export
 
-      .columns.is-multiline
-        .column.is-one-fifth(v-for="(movie, index) in movies", :key="index")
+      b-collapse(aria-id="filters" :open.sync="isFilterBlockOpen")
+        b-tabs(v-model='activeFiltersTab')
+          b-tab-item(label='Local')
+            .columns.is-multiline
+              .column.is-one-fifth
+                b-field(label="Title" label-position="on-border")
+                  b-input(v-model="filters.title")
+              .column.is-one-fifth
+                b-field(label="Viewings length" label-position="on-border")
+                  b-input(v-model.number="filters.viewingsLength" type="number")
+
+          b-tab-item(label='Remote' disabled)
+
+    .columns.is-multiline
+        .column.is-one-fifth(v-for="(movie, index) in filteredMovies", :key="index")
           app-card(
             :image="getThumbnail(movie)",
             :date="movie.created_at",
@@ -38,7 +53,25 @@ export default {
 
   data () {
     return {
-      movies: []
+      movies: [],
+
+      isFilterBlockOpen: false,
+      activeFiltersTab: 0,
+      filters: {
+        title: '',
+        viewingsLength: ''
+      }
+    }
+  },
+
+  computed: {
+    filteredMovies () {
+      return this.movies
+        .filter(movie => {
+          let regex = new RegExp(this.filters.title, 'i')
+          return !!movie.title.match(regex)
+        })
+        .filter(movie => this.filters.viewingsLength !== '' ? movie.viewings.length === this.filters.viewingsLength : true)
     }
   },
 
