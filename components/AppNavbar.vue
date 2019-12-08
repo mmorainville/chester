@@ -74,14 +74,14 @@ export default {
       this.$buefy.dialog.prompt({
         message: 'Set a custom endpoint for the API.',
         inputAttrs: {
-          placeholder: 'e.g. https://chester-staging.herokuapp.com/',
+          placeholder: 'e.g. https://pulsar-chester-staging.herokuapp.com/',
           value: localStorage.getItem('axios.baseURL') ? localStorage.getItem('axios.baseURL') : this.$axios.defaults.baseURL
         },
         trapFocus: true,
         onConfirm: value => {
           localStorage.setItem('axios.baseURL', value)
           this.$axios.defaults.baseURL = localStorage.getItem('axios.baseURL')
-          this.$buefy.toast.open(`Your name is: ${value}`)
+          this.$buefy.toast.open(`The API endpoint has been set to: ${value}`)
         }
       })
     }

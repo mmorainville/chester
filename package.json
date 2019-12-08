@@ -16,6 +16,7 @@
     "@nuxtjs/auth": "^4.8.4",
     "@nuxtjs/axios": "^5.8.0",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "@nuxtjs/tailwindcss": "^1.1.2",
     "dayjs": "^1.8.17",
     "lodash.clonedeep": "^4.5.0",
     "lodash.debounce": "^4.0.8",
@@ -24,7 +25,6 @@
   },
   "devDependencies": {
     "@nuxtjs/dotenv": "^1.4.1",
-    "@nuxtjs/tailwindcss": "^1.1.2",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-jest": "^24.1.0",
     "eslint-config-prettier": "^6.4.0",
