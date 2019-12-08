@@ -2,3 +2,13 @@
 
 @import "buefy";
 @import "tailwind";
+
+.__nuxt-error-page {
+  background-color: transparent;
+  font-family: inherit;
+  position: static;
+
+  svg {
+    margin: auto;
+  }
+}

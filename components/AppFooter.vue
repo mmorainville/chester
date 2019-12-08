@@ -4,24 +4,17 @@
       .level
         .level-left
           .level-item
-            a.title.is-4(href="#") Pulsar
+            a.title.is-4(href="http://pulsar.surge.sh/") Pulsar
         .level-right
-          a.level-item(href="#") Features
-          a.level-item(href="#") Enterprise
-          a.level-item(href="#") Support
-          a.level-item(href="#") ICO
+          nuxt-link.level-item(:to="{name: 'about'}") About
 
       hr
 
       .columns
         .column
           .buttons
-            a.button(href="#")
-              b-icon(icon="twitter")
-            a.button(href="#")
-              b-icon(icon="facebook")
-            a.button(href="#")
-              b-icon(icon="instagram")
+            a.button(href="https://github.com/mmorainville")
+              b-icon(icon="github-circle")
 
         .column.has-text-centered.has-text-right-tablet
           p.subtitle.is-6 &copy; 2019 Pulsar. All right reserved.

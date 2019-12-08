@@ -44,10 +44,6 @@ export default {
 
       items: [
         {
-          title: 'About',
-          to: { name: 'about' }
-        },
-        {
           title: 'Links',
           to: { name: 'links' }
         },
