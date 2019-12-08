@@ -140,9 +140,7 @@ export default {
           pageCount: 0,
           isbn: '',
           publisher: '',
-          readings: [
-            defaultReading
-          ]
+          readings: []
         }
       }
     }

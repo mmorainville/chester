@@ -8,6 +8,8 @@
       span.is-size-7(v-if="date") {{ date | date('YYYY/MM/DD') }}
       h5.title.is-5
         a(:href="url") {{ title }}
+      slot(name="subtitle")
+        h6.subtitle.is-6(v-if="subtitle") {{ subtitle }}
       b-taglist(v-if="tags")
         b-tag(v-for="(tag, key) of tags" :key="key" rounded) {{ tag.name }}
 
@@ -33,6 +35,10 @@
       title: {
         type: String,
         required: true
+      },
+      subtitle: {
+        type: String,
+        required: false
       },
       url: {
         type: String,

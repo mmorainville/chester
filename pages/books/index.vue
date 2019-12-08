@@ -33,6 +33,8 @@
             @app-card:on-delete="deleteBook(book.id)"
             @app-card:on-edit="editBook(book)"
           )
+            template(#subtitle)
+              h6.subtitle.is-6 {{ book.pageCount }} pages
 </template>
 
 <script>
