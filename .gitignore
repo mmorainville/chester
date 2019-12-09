@@ -88,3 +88,6 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# Now.sh deployment file
+now.json

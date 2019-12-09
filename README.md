@@ -50,6 +50,10 @@ TMDB_API_URL=https://api.themoviedb.org/3
 TMDB_API_KEY=<tmdb_api_key>
 ```
 
+### On Now.sh
+
+Rename `now.json.example` to `now.json` and replace the environment variables with the correct values.
+
 ## Bookmarklet
 
 Replace <host> with your host (for example: `https://pulsar-chester.surge.sh/` or `https://pulsar-chester-client-staging.herokuapp.com/`).
