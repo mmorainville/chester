@@ -25,8 +25,7 @@
             | Hello, {{ $auth.user.username }}
           .navbar-item
             .buttons
-              nuxt-link.button.is-light(:to="{name: 'login'}" v-if="!$auth.loggedIn") Log in
-              a.button.is-primary(href="#" v-if="!$auth.loggedIn") Sign up
+              nuxt-link.button.is-primary(:to="{name: 'login'}" v-if="!$auth.loggedIn") Log in
               button.button.is-primary(type="button" v-if="$auth.loggedIn" @click="$auth.logout()") Log out
 </template>
 
