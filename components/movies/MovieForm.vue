@@ -3,7 +3,7 @@
     .container.is-fluid
       h2.title.has-text-centered {{ isCreating ? 'New movie' : 'Edit movie' }}
 
-      .columns.is-centered
+      .columns
         .column.is-3
           img(v-if="movieToCreateOrEdit.poster" :src="`https://image.tmdb.org/t/p/w500/${movieToCreateOrEdit.poster}`")
 
@@ -99,7 +99,7 @@
               .control
                 button.button.is-primary.is-fullwidth(type="submit" :class="{ 'is-loading': isFetching }") Submit
 
-        .column.is-3
+        .column.is-3(v-if="showDebug")
           pre.is-size-7 {{ movieToCreateOrEdit }}
 </template>
 

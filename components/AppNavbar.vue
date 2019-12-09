@@ -21,6 +21,7 @@
             a.navbar-link Parameters
             .navbar-dropdown
               a.navbar-item.navbar-item-dropdown(@click="setBaseUrl") API endpoint
+              a.navbar-item.navbar-item-dropdown(@click="toggleDebug") {{ showDebug ? 'Hide' : 'Show' }} debug
           .navbar-item(v-if="$auth.loggedIn && $auth.user.username")
             | Hello, {{ $auth.user.username }}
           .navbar-item
@@ -30,6 +31,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'AppNavbar',
 
@@ -62,6 +65,12 @@ export default {
     }
   },
 
+  computed: {
+    showDebug () {
+      return this.$store.state.parameters.showDebug
+    }
+  },
+
   watch: {
     $route () {
       this.isNavbarOpen = false
@@ -83,7 +92,10 @@ export default {
           this.$buefy.toast.open(`The API endpoint has been set to: ${value}`)
         }
       })
-    }
+    },
+    ...mapMutations({
+      toggleDebug: 'parameters/toggleDebug'
+    })
   }
 }
 </script>

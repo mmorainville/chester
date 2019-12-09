@@ -3,7 +3,7 @@
     .container.is-fluid
       h2.title.has-text-centered {{ isCreating ? 'New book' : 'Edit book' }}
 
-      .columns.is-centered
+      .columns
         .column.is-3
           img.tw-w-full(v-if="bookToCreateOrEdit.cover" :src="bookToCreateOrEdit.cover")
 
@@ -103,7 +103,7 @@
               .control
                 button.button.is-primary.is-fullwidth(type="submit" :class="{ 'is-loading': isFetching }") Submit
 
-        .column.is-3
+        .column.is-3(v-if="showDebug")
           pre.is-size-7 {{ bookToCreateOrEdit }}
 </template>
 

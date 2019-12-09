@@ -13,6 +13,10 @@ export default {
 
     isEditing () {
       return !!this.itemToCreateOrEdit.id
+    },
+
+    showDebug () {
+      return this.$store.state.parameters.showDebug
     }
   },
 
