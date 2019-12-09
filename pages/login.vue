@@ -85,6 +85,8 @@ export default {
           password,
           confirmed: true
         })
+
+        this.login()
       } catch (error) {
         console.log(error)
 
