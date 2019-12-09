@@ -7,13 +7,11 @@
       "config": {}
     }
   ],
-  "env": {
-    "GOOGLE_BOOKS_API_KEY": "<google_books_api_key>",
-    "TMDB_API_KEY": "<tmdb_api_key>"
-  },
   "build": {
     "env": {
-      "BASE_URL": "https://pulsar-chester-staging.herokuapp.com/"
+      "BASE_URL": "https://pulsar-chester-staging.herokuapp.com/",
+      "GOOGLE_BOOKS_API_KEY": "<google_books_api_key>",
+      "TMDB_API_KEY": "<tmdb_api_key>"
     }
   }
 }
