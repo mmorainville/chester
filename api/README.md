@@ -18,13 +18,19 @@ $ git commit -m "chore: update config"
 $ git push heroku master
 ```
 
-If you want to manage several remote, just rename the branch:
+If you want to manage several remotes, just rename the branch:
 ```
 # Set git remote heroku to https://git.heroku.com/pulsar-chester-staging.git
 heroku git:remote -a pulsar-chester-staging
 
 # Next, rename the remote to something else
 git remote rename heroku pulsar-chester-staging
+```
+
+Then add your changes to Git and deploy your app.
+
+```
+git push pulsar-chester-mmorainville master
 ```
 
 Don't forget to set ENV variables on Heroku.
