@@ -44,7 +44,14 @@ module.exports = {
           {
             width: 1600,
             height: 1200,
-            scaleFactor: 0.25
+            scaleFactor: 0.25,
+
+            launchOptions: {
+              args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox'
+              ]
+            }
           });
 
         let base64 = buffer.toString('base64');
