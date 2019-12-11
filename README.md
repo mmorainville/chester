@@ -54,6 +54,14 @@ TMDB_API_KEY=<tmdb_api_key>
 
 Rename `now.json.example` to `now.json` and replace the environment variables with the correct values.
 
+### API
+
+To deploy the API from this repository root folder you can use `git subtree`.
+
+```
+git subtree push --prefix api heroku master
+```
+
 ## Bookmarklet
 
 Replace <host> with your host (for example: `https://pulsar-chester.surge.sh/` or `https://pulsar-chester-client-staging.herokuapp.com/`).
