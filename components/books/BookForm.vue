@@ -39,7 +39,7 @@
               b-input(v-model='bookToCreateOrEdit.publisher' placeholder='Publisher...')
 
             b-field(label='Page number')
-              b-input(v-model='bookToCreateOrEdit.pageCount' type="number" placeholder='Page number...')
+              b-input(v-model.number='bookToCreateOrEdit.pageCount' type="number" placeholder='Page number...')
 
             b-field(label='Authors')
               b-taginput(v-model='bookToCreateOrEdit.authors' placeholder='Authors...')

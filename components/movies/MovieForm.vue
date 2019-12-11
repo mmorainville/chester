@@ -29,7 +29,7 @@
 
             .field
               .control
-                input.input(type="number" placeholder="Year" v-model="movieToCreateOrEdit.year")
+                input.input(type="number" placeholder="Year" v-model.number="movieToCreateOrEdit.year")
 
             b-field(label='Directors')
               b-taginput(v-model='movieToCreateOrEdit.directors' placeholder='Directors...')

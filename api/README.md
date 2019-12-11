@@ -59,3 +59,10 @@ DATABASE_NAME: d516fp1u21ph7b
 NODE_ENV: staging
 PORT: 1337
 ```
+
+## Configuration
+
+When your application is online you have to manually change the permissions for each endpoint in the Strapi administration panel.
+Allow reading for all entities (`read` right) for the Public group and allow all access for the Authenticated group.
+
+After that set the correct remote endpoint (for example `https://pulsar-chester-staging.herokuapp.com`) in the parameters on the client.
