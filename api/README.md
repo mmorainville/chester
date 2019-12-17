@@ -67,7 +67,7 @@ Allow reading for all entities (`read` right) for the Public group and allow all
 
 After that set the correct remote endpoint (for example `https://pulsar-chester-staging.herokuapp.com`) in the parameters on the client.
 
-## Know issues
+## Known issues
 
 If you deploy on Heroku you won't get a screenshot after saving a link because of a missing library.
 To get it add the following buildpack to your Heroku app: https://github.com/jontewks/puppeteer-heroku-buildpack.
