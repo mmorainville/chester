@@ -2,6 +2,8 @@
 
 > An app to keep track of a lot of things: links, watched movies, read books, attented events, etc.
 
+[![Chester](./screenshot.png "Chester")](https://chester.mmorainville.now.sh/)
+
 ## Build Setup
 
 ```bash
