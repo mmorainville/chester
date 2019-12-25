@@ -21,6 +21,12 @@
               .column.is-one-fifth
                 b-field(label="Readings length" label-position="on-border")
                   b-input(v-model.number="filters.readingsLength" type="number")
+              .column.is-one-fifth
+                b-field(label="Mininum page count" label-position="on-border")
+                  b-input(v-model.number="filters.minPageCount" type="number")
+              .column.is-one-fifth
+                b-field(label="Maximum page count" label-position="on-border")
+                  b-input(v-model.number="filters.maxPageCount" type="number")
 
           b-tab-item(label='Remote' disabled)
 
@@ -61,7 +67,9 @@ export default {
       activeFiltersTab: 0,
       filters: {
         title: '',
-        readingsLength: ''
+        readingsLength: '',
+        minPageCount: '',
+        maxPageCount: ''
       }
     }
   },
@@ -74,6 +82,8 @@ export default {
           return !!book.title.match(regex)
         })
         .filter(book => this.filters.readingsLength !== '' ? book.readings.length === this.filters.readingsLength : true)
+        .filter(book => this.filters.minPageCount !== '' ? book.pageCount >= this.filters.minPageCount : true)
+        .filter(book => this.filters.maxPageCount !== '' ? book.pageCount <= this.filters.maxPageCount : true)
     }
   },
 
