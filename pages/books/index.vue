@@ -115,7 +115,7 @@ export default {
     },
 
     exportBooks () {
-      this.export(this.books)
+      this.export(this.filteredBooks)
     },
 
     editBook (book) {

@@ -21,6 +21,9 @@
               .column.is-one-fifth
                 b-field(label="Viewings length" label-position="on-border")
                   b-input(v-model.number="filters.viewingsLength" type="number")
+              .column.is-one-fifth
+                b-field(label="Viewing year" label-position="on-border")
+                  b-input(v-model.number="filters.viewingYear" type="number")
 
           b-tab-item(label='Remote' disabled)
 
@@ -59,7 +62,8 @@ export default {
       activeFiltersTab: 0,
       filters: {
         title: '',
-        viewingsLength: ''
+        viewingsLength: '',
+        viewingYear: ''
       }
     }
   },
@@ -72,6 +76,11 @@ export default {
           return !!movie.title.match(regex)
         })
         .filter(movie => this.filters.viewingsLength !== '' ? movie.viewings.length === this.filters.viewingsLength : true)
+        .filter(movie => this.filters.viewingYear !== '' ?
+          movie.viewings
+            .reduce((accumulator, viewing) => accumulator.concat(viewing.dates), [])
+            .some(date => date.includes(this.filters.viewingYear)) :
+          true)
     }
   },
 
@@ -103,7 +112,7 @@ export default {
     },
 
     exportMovies () {
-      this.export(this.movies)
+      this.export(this.filteredMovies)
     },
 
     editMovie (movie) {
