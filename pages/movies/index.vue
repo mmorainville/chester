@@ -132,7 +132,6 @@ export default {
       const movies = await $axios.$get('movies?_limit=-1')
       return { movies }
     } catch (e) {
-      console.log(e)
       error({ statusCode: e.response.status, message: 'Access not allowed.' })
     }
   }
