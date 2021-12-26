@@ -104,7 +104,7 @@ export default {
     },
 
     async findAllMovies () {
-      this.movies = await this.findAll('movies')
+      this.movies = await this.findAll('movies?_limit=-1')
     },
 
     async deleteMovie (id) {
@@ -129,7 +129,7 @@ export default {
 
   async asyncData ({ $axios, error }) {
     try {
-      const movies = await $axios.$get('movies')
+      const movies = await $axios.$get('movies?_limit=-1')
       return { movies }
     } catch (e) {
       console.log(e)
